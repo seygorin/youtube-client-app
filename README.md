@@ -2,8 +2,8 @@
 
 ## Astrakhan State University, 2015
 
-**Email:** seygorin@gmail.com  
-**Telegram:** [@seygorin](https://t.me/seygorin)
+**Email: seygorin@gmail.com**  <br>
+**Telegram: [@seygorin](https://t.me/seygorin)**
 
 ### Previous Work Experience
 
