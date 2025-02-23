@@ -24,6 +24,17 @@ const chunk = (array, size = 1) => {
   return result
 }
 
+const compact = (array) => {
+  if (!isArray(array)) return []
+
+  const result = []
+  for (const item of array) {
+    item ? (result[result.length] = item) : null
+  }
+  return result
+}
+
 module.exports = {
   chunk,
+  compact,
 }
