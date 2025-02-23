@@ -34,7 +34,20 @@ const compact = (array) => {
   return result
 }
 
+const drop = (array, n = 1) => {
+  if (!isArray(array)) return []
+
+  const result = []
+  let i = 0
+  for (const item of array) {
+    i >= n ? (result[result.length] = item) : null
+    i++
+  }
+  return result
+}
+
 module.exports = {
   chunk,
   compact,
+  drop,
 }
