@@ -13,6 +13,8 @@ const isObject = (value) =>
 
 const isString = (value) => typeof value === 'string'
 
+const isNaN = (value) => value !== value
+
 const chunk = (array, size = 1) => {
   if (!isArray(array)) return []
   if (size < 1) return []
@@ -139,6 +141,46 @@ const find = (array, predicate) => {
   return false
 }
 
+const includes = (collection, value, fromIndex = 0) => {
+  if (collection == null) return false
+
+  return isString(collection)
+    ? (() => {
+        for (let i = fromIndex; i < collection.length; i++) {
+          let found = true
+          for (let j = 0; j < value.length; j++) {
+            if (collection[i + j] !== value[j]) {
+              found = false
+              break
+            }
+          }
+          if (found) return true
+        }
+        return false
+      })()
+    : isArray(collection)
+    ? (() => {
+        for (let i = Math.max(fromIndex, 0); i < collection.length; i++) {
+          const item = collection[i]
+          if (item === value || (isNaN(item) && isNaN(value))) {
+            return true
+          }
+        }
+        return false
+      })()
+    : isObject(collection)
+    ? (() => {
+        for (const key in collection) {
+          const item = collection[key]
+          if (item === value || (isNaN(item) && isNaN(value))) {
+            return true
+          }
+        }
+        return false
+      })()
+    : false
+}
+
 module.exports = {
   chunk,
   compact,
@@ -146,4 +188,5 @@ module.exports = {
   dropWhile,
   take,
   find,
+  includes,
 }
