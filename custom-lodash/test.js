@@ -15,10 +15,10 @@ console.log(_.drop([1, 2, 3], 5))
 console.log(_.drop([1, 2, 3], 0))
 
 console.log('\ndropWhile:')
-const users = [
-  {user: 'barney', active: false},
-  {user: 'fred', active: false},
-  {user: 'pebbles', active: true},
+var users = [
+  {user: 'barney', age: 36, active: true},
+  {user: 'fred', age: 40, active: false},
+  {user: 'pebbles', age: 1, active: true},
 ]
 console.log(
   _.dropWhile(users, function (o) {
@@ -34,3 +34,9 @@ console.log(_.take([1, 2, 3]))
 console.log(_.take([1, 2, 3], 2))
 console.log(_.take([1, 2, 3], 5))
 console.log(_.take([1, 2, 3], 0))
+
+console.log('\nfind tests:')
+console.log(_.find(users, (o) => o.age < 40))
+console.log(_.find(users, {age: 1, active: true}))
+console.log(_.find(users, ['active', false]))
+console.log(_.find(users, 'active'))

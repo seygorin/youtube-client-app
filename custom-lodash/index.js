@@ -6,9 +6,7 @@ const isArray = (value) =>
       value.length >= 0 &&
       ('0' in value || value.length === 0)
 
-const isFunction = (value) => {
-  return typeof value === 'function'
-}
+const isFunction = (value) => typeof value === 'function'
 
 const isObject = (value) =>
   typeof value === 'object' && value !== null && !isArray(value)
@@ -111,10 +109,41 @@ const take = (array, n = 1) => {
 
   return result
 }
+
+const find = (array, predicate) => {
+  if (!isArray(array)) return false
+
+  const predicateFunc = isFunction(predicate)
+    ? predicate
+    : isObject(predicate)
+    ? (item) => {
+        for (const key in predicate) {
+          if (item[key] !== predicate[key]) return false
+        }
+        return true
+      }
+    : isArray(predicate) && predicate.length === 2
+    ? (item) => item[predicate[0]] === predicate[1]
+    : isString(predicate)
+    ? (item) => item[predicate]
+    : () => false
+
+  let i = 0
+  for (const item of array) {
+    if (predicateFunc(item, i, array)) {
+      return item
+    }
+    i++
+  }
+
+  return false
+}
+
 module.exports = {
   chunk,
   compact,
   drop,
   dropWhile,
   take,
+  find,
 }
