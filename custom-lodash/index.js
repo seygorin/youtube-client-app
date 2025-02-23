@@ -6,6 +6,15 @@ const isArray = (value) =>
       value.length >= 0 &&
       ('0' in value || value.length === 0)
 
+const isFunction = (value) => {
+  return typeof value === 'function'
+}
+
+const isObject = (value) =>
+  typeof value === 'object' && value !== null && !isArray(value)
+
+const isString = (value) => typeof value === 'string'
+
 const chunk = (array, size = 1) => {
   if (!isArray(array)) return []
   if (size < 1) return []
@@ -46,8 +55,49 @@ const drop = (array, n = 1) => {
   return result
 }
 
+const dropWhile = (array, predicate) => {
+  if (!isArray(array)) return []
+
+  const predicateFunc = isFunction(predicate)
+    ? predicate
+    : isObject(predicate)
+    ? (item) => {
+        for (const key in predicate) {
+          if (item[key] !== predicate[key]) return false
+        }
+        return true
+      }
+    : isArray(predicate)
+    ? (item) => item[predicate[0]] === predicate[1]
+    : isString(predicate)
+    ? (item) => item[predicate]
+    : () => false
+
+  let dropIndex = 0
+  let i = 0
+  for (const item of array) {
+    if (!predicateFunc(item, i, array)) {
+      break
+    }
+    dropIndex++
+    i++
+  }
+
+  const result = []
+  i = 0
+  for (const item of array) {
+    if (i >= dropIndex) {
+      result[result.length] = item
+    }
+    i++
+  }
+
+  return result
+}
+
 module.exports = {
   chunk,
   compact,
   drop,
+  dropWhile,
 }
