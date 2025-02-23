@@ -95,9 +95,26 @@ const dropWhile = (array, predicate) => {
   return result
 }
 
+const take = (array, n = 1) => {
+  if (!isArray(array)) return []
+  if (n < 0) return []
+
+  const result = []
+  const limit = n > array.length ? array.length : n
+  let count = 0
+
+  for (const item of array) {
+    if (count >= limit) break
+    result[result.length] = item
+    count++
+  }
+
+  return result
+}
 module.exports = {
   chunk,
   compact,
   drop,
   dropWhile,
+  take,
 }

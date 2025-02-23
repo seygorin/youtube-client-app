@@ -28,3 +28,9 @@ console.log(
 console.log(_.dropWhile(users, {user: 'barney', active: false}))
 console.log(_.dropWhile(users, ['active', false]))
 console.log(_.dropWhile(users, 'active'))
+
+console.log('\ntake:')
+console.log(_.take([1, 2, 3]))
+console.log(_.take([1, 2, 3], 2))
+console.log(_.take([1, 2, 3], 5))
+console.log(_.take([1, 2, 3], 0))
