@@ -62,3 +62,8 @@ console.log(_.merge(object, other))
 
 console.log('\nomit:')
 console.log(_.omit({a: 1, b: '2', c: 3}, ['a', 'c']))
+
+console.log('\nomitBy:')
+console.log(
+  _.omitBy({a: 1, b: '2', c: 3}, (value) => typeof value === 'number')
+)
