@@ -70,3 +70,8 @@ console.log(
 
 console.log('\npick:')
 console.log(_.pick({a: 1, b: '2', c: 3}, ['a', 'c']))
+
+console.log('\npickBy:')
+console.log(
+  _.pickBy({a: 1, b: '2', c: 3}, (value) => typeof value === 'number')
+)

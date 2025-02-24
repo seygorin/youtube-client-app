@@ -309,6 +309,19 @@ const pick = (object, paths) =>
         return result
       })()
 
+const pickBy = (object, predicate) =>
+  !isObject(object) || !isFunction(predicate)
+    ? {}
+    : (() => {
+        const result = {}
+
+        for (const key in object) {
+          predicate(object[key], key) ? (result[key] = object[key]) : null
+        }
+
+        return result
+      })()
+
 module.exports = {
   chunk,
   compact,
@@ -323,4 +336,5 @@ module.exports = {
   omit,
   omitBy,
   pick,
+  pickBy,
 }
