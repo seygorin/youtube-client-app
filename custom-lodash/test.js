@@ -51,3 +51,6 @@ console.log('\nmap:')
 console.log(_.map([4, 8], (n) => n * n))
 console.log(_.map({a: 4, b: 8}, (n) => n * n))
 console.log(_.map(users, 'user'))
+
+console.log('\nzip:')
+console.log(_.zip(['a', 'b'], [1, 2], [true, false]))

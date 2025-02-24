@@ -211,6 +211,29 @@ const map = (collection, iteratee) => {
     : []
 }
 
+const zip = (...arrays) =>
+  !arrays.length
+    ? []
+    : (() => {
+        let maxLength = 0
+        for (const arr of arrays) {
+          if (!isArray(arr)) return []
+          maxLength = arr.length > maxLength ? arr.length : maxLength
+        }
+
+        const result = []
+
+        for (let i = 0; i < maxLength; i++) {
+          const group = []
+          for (const arr of arrays) {
+            group[group.length] = arr[i]
+          }
+          result[result.length] = group
+        }
+
+        return result
+      })()
+
 module.exports = {
   chunk,
   compact,
@@ -220,4 +243,5 @@ module.exports = {
   find,
   includes,
   map,
+  zip,
 }
