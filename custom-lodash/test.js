@@ -75,3 +75,13 @@ console.log('\npickBy:')
 console.log(
   _.pickBy({a: 1, b: '2', c: 3}, (value) => typeof value === 'number')
 )
+
+console.log('\ntoPairs:')
+function Foo() {
+  this.a = 1
+  this.b = 2
+}
+
+Foo.prototype.c = 3
+
+console.log(_.toPairs(new Foo()))

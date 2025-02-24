@@ -322,6 +322,24 @@ const pickBy = (object, predicate) =>
         return result
       })()
 
+const toPairs = (object) =>
+  !isObject(object)
+    ? []
+    : (() => {
+        const result = []
+
+        for (const key in object) {
+          if (Object.prototype.hasOwnProperty.call(object, key)) {
+            const pair = []
+            pair[0] = key
+            pair[1] = object[key]
+            result[result.length] = pair
+          }
+        }
+
+        return result
+      })()
+
 module.exports = {
   chunk,
   compact,
@@ -337,4 +355,5 @@ module.exports = {
   omitBy,
   pick,
   pickBy,
+  toPairs,
 }
