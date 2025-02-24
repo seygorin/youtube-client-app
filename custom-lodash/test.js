@@ -46,3 +46,8 @@ console.log(_.includes([1, 2, 3], 1))
 console.log(_.includes([1, 2, 3], 1, 2))
 console.log(_.includes({a: 1, b: 2}, 1))
 console.log(_.includes('abcd', 'bc'))
+
+console.log('\nmap:')
+console.log(_.map([4, 8], (n) => n * n))
+console.log(_.map({a: 4, b: 8}, (n) => n * n))
+console.log(_.map(users, 'user'))

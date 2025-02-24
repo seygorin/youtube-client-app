@@ -181,6 +181,36 @@ const includes = (collection, value, fromIndex = 0) => {
     : false
 }
 
+const map = (collection, iteratee) => {
+  if (collection == null) return []
+
+  const result = []
+
+  const func = isFunction(iteratee)
+    ? iteratee
+    : isString(iteratee)
+    ? (item) => item[iteratee]
+    : (item) => item
+
+  return isArray(collection)
+    ? (() => {
+        let i = 0
+        for (const item of collection) {
+          result[result.length] = func(item, i, collection)
+          i++
+        }
+        return result
+      })()
+    : isObject(collection)
+    ? (() => {
+        for (const key in collection) {
+          result[result.length] = func(collection[key], key, collection)
+        }
+        return result
+      })()
+    : []
+}
+
 module.exports = {
   chunk,
   compact,
@@ -189,4 +219,5 @@ module.exports = {
   take,
   find,
   includes,
+  map,
 }
