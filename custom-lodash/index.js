@@ -234,6 +234,42 @@ const zip = (...arrays) =>
         return result
       })()
 
+const merge = (object, ...sources) =>
+  !isObject(object)
+    ? {}
+    : (() => {
+        const result = {}
+
+        for (const key in object) {
+          result[key] = isArray(object[key])
+            ? [...object[key]]
+            : isObject(object[key])
+            ? merge(object[key])
+            : object[key]
+        }
+        for (const source of sources) {
+          if (!isObject(source)) continue
+
+          for (const key in source) {
+            const srcValue = source[key]
+            const targetValue = result[key]
+
+            result[key] =
+              isArray(srcValue) && isArray(targetValue)
+                ? targetValue.map((item, i) =>
+                    isObject(item) && isObject(srcValue[i])
+                      ? merge(item, srcValue[i])
+                      : srcValue[i] || item
+                  )
+                : isObject(srcValue) && isObject(targetValue)
+                ? merge(targetValue, srcValue)
+                : srcValue
+          }
+        }
+
+        return result
+      })()
+
 module.exports = {
   chunk,
   compact,
@@ -244,4 +280,5 @@ module.exports = {
   includes,
   map,
   zip,
+  merge,
 }
