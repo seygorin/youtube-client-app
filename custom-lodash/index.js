@@ -112,6 +112,40 @@ const take = (array, n = 1) => {
   return result
 }
 
+const filter = (collection, predicate) =>
+  collection == null || (!isArray(collection) && !isObject(collection))
+    ? []
+    : (() => {
+        const result = []
+
+        const predicateFunc = isFunction(predicate)
+          ? predicate
+          : isObject(predicate) && !isArray(predicate)
+          ? (item) => {
+              for (const key in predicate) {
+                if (item[key] !== predicate[key]) return false
+              }
+              return true
+            }
+          : isArray(predicate) && predicate.length === 2
+          ? (item) => item[predicate[0]] === predicate[1]
+          : isString(predicate)
+          ? (item) => !!item[predicate]
+          : () => false
+
+        if (isArray(collection)) {
+          let i = 0
+          for (const item of collection) {
+            if (predicateFunc(item, i, collection)) {
+              result[result.length] = item
+            }
+            i++
+          }
+        }
+
+        return result
+      })()
+
 const find = (array, predicate) => {
   if (!isArray(array)) return false
 
@@ -346,6 +380,7 @@ module.exports = {
   drop,
   dropWhile,
   take,
+  filter,
   find,
   includes,
   map,

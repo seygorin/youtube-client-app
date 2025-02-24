@@ -15,7 +15,7 @@ console.log(_.drop([1, 2, 3], 5))
 console.log(_.drop([1, 2, 3], 0))
 
 console.log('\ndropWhile:')
-var users = [
+const users = [
   {user: 'barney', age: 36, active: true},
   {user: 'fred', age: 40, active: false},
   {user: 'pebbles', age: 1, active: true},
@@ -85,3 +85,13 @@ function Foo() {
 Foo.prototype.c = 3
 
 console.log(_.toPairs(new Foo()))
+
+console.log('\nfilter:')
+console.log(
+  _.filter(users, function (o) {
+    return !o.active
+  })
+)
+console.log(_.filter(users, {age: 36, active: true}))
+console.log(_.filter(users, ['active', false]))
+console.log(_.filter(users, 'active'))
