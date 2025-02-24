@@ -361,16 +361,10 @@ const toPairs = (object) =>
     ? []
     : (() => {
         const result = []
-
         for (const key in object) {
-          if (Object.prototype.hasOwnProperty.call(object, key)) {
-            const pair = []
-            pair[0] = key
-            pair[1] = object[key]
-            result[result.length] = pair
-          }
+          Object.getOwnPropertyDescriptor(object, key) && 
+            (result[result.length] = [key, object[key]])
         }
-
         return result
       })()
 
