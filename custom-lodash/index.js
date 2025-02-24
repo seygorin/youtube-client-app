@@ -140,19 +140,23 @@ const filter = (collection, predicate) =>
     const result = []
     const predicateFunc = createPredicateFunction(predicate)
 
-    if (isArray(coll)) {
-      let i = 0
-      for (const item of coll) {
-        predicateFunc(item, i, coll) ? (result[result.length] = item) : null
-        i++
-      }
-    } else if (isObject(coll)) {
-      for (const key in coll) {
-        predicateFunc(coll[key], key)
-          ? (result[result.length] = coll[key])
-          : null
-      }
-    }
+    isArray(coll)
+      ? (() => {
+          let i = 0
+          for (const item of coll) {
+            predicateFunc(item, i, coll) ? (result[result.length] = item) : null
+            i++
+          }
+        })()
+      : isObject(coll)
+      ? (() => {
+          for (const key in coll) {
+            predicateFunc(coll[key], key)
+              ? (result[result.length] = coll[key])
+              : null
+          }
+        })()
+      : null
 
     return result
   })
@@ -288,11 +292,16 @@ const merge = (object, ...sources) =>
 
             result[key] =
               isArray(srcValue) && isArray(targetValue)
-                ? targetValue.map((item, i) =>
-                    isObject(item) && isObject(srcValue[i])
-                      ? merge(item, srcValue[i])
-                      : srcValue[i] || item
-                  )
+                ? (() => {
+                    const resultArray = []
+                    for (let i = 0; i < targetValue.length; i++) {
+                      resultArray[resultArray.length] =
+                        isObject(targetValue[i]) && isObject(srcValue[i])
+                          ? merge(targetValue[i], srcValue[i])
+                          : srcValue[i] || targetValue[i]
+                    }
+                    return resultArray
+                  })()
                 : isObject(srcValue) && isObject(targetValue)
                 ? merge(targetValue, srcValue)
                 : srcValue
