@@ -59,3 +59,6 @@ console.log('\nmerge:')
 const object = {a: [{b: 2}, {d: 4}]}
 const other = {a: [{c: 3}, {e: 5}]}
 console.log(_.merge(object, other))
+
+console.log('\nomit:')
+console.log(_.omit({a: 1, b: '2', c: 3}, ['a', 'c']))

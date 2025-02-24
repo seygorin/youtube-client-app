@@ -270,6 +270,19 @@ const merge = (object, ...sources) =>
         return result
       })()
 
+const omit = (object, paths) =>
+  !isObject(object) || !isArray(paths)
+    ? {}
+    : (() => {
+        const result = {}
+
+        for (const key in object) {
+          !includes(paths, key) ? (result[key] = object[key]) : null
+        }
+
+        return result
+      })()
+
 module.exports = {
   chunk,
   compact,
@@ -281,4 +294,5 @@ module.exports = {
   map,
   zip,
   merge,
+  omit,
 }
