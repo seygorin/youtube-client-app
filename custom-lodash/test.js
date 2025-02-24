@@ -67,3 +67,6 @@ console.log('\nomitBy:')
 console.log(
   _.omitBy({a: 1, b: '2', c: 3}, (value) => typeof value === 'number')
 )
+
+console.log('\npick:')
+console.log(_.pick({a: 1, b: '2', c: 3}, ['a', 'c']))

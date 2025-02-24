@@ -296,6 +296,19 @@ const omitBy = (object, predicate) =>
         return result
       })()
 
+const pick = (object, paths) =>
+  !isObject(object) || !isArray(paths)
+    ? {}
+    : (() => {
+        const result = {}
+
+        for (const path of paths) {
+          path in object ? (result[path] = object[path]) : null
+        }
+
+        return result
+      })()
+
 module.exports = {
   chunk,
   compact,
@@ -309,4 +322,5 @@ module.exports = {
   merge,
   omit,
   omitBy,
+  pick,
 }
