@@ -1,1 +1,30 @@
-<p>search-filter works!</p>
+@if (showFilters()) {
+
+<div class="sorting-container">
+  <p>Sorting by:</p>
+
+  <div class="sort-options">
+    <a
+      href="javascript:void(0)"
+      [class.active]="isSortingByDate()"
+      (click)="sortByDate()"
+    >
+      date
+    </a>
+
+    <a
+      href="javascript:void(0)"
+      [class.active]="isSortingByViews()"
+      (click)="sortByViews()"
+    >
+      count of views
+    </a>
+
+    <div class="search-by-word">
+      <span>by word or sentence</span>
+      <input type="text" />
+    </div>
+  </div>
+</div>
+
+}

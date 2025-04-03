@@ -1,0 +1,58 @@
+.sorting-container {
+  background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  gap: 16px;
+  font-size: 14px;
+
+  p {
+    margin: 0;
+    color: rgba(0, 0, 0, 0.7);
+    font-weight: normal;
+  }
+}
+
+.sort-options {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+
+  a {
+    text-decoration: none;
+    padding: 0 8px;
+    font-size: 14px;
+    text-transform: lowercase;
+    font-weight: normal;
+    color: #1976d2;
+    cursor: pointer;
+  }
+
+  .active {
+    text-decoration: underline;
+  }
+}
+
+.search-by-word {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(0, 0, 0, 0.7);
+
+  input {
+    border: none;
+    padding: 4px 8px;
+    font-size: 14px;
+    height: 13px;
+    width: 150px;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  span {
+    color: #1976d2;
+  }
+}

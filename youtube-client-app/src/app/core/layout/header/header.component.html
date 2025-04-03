@@ -1,1 +1,33 @@
-<p>header works!</p>
+<mat-toolbar color="primary">
+  <div class="toolbar-container">
+    <div class="logo" routerLink="/">
+      <mat-icon>play_arrow</mat-icon>
+    </div>
+
+    <div class="search-container">
+      <input
+        [formControl]="searchControl"
+        placeholder="What are you want to find out?"
+      />
+      <button class="search-button">
+        <span>search</span>
+      </button>
+    </div>
+    <button
+      class="filter-button"
+      mat-icon-button
+      (click)="toggleFiltering()"
+      matTooltip="Filtering & Sorting"
+    >
+      <mat-icon>tune</mat-icon>
+    </button>
+  </div>
+
+  <div class="action-buttons">
+		<span>Your Name</span>
+    <button mat-icon-button routerLink="/login" matTooltip="Login">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
+

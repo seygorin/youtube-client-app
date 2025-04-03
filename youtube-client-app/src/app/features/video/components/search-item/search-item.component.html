@@ -1,1 +1,37 @@
-<p>search-item works!</p>
+<mat-card class="video-card">
+  <div class="thumbnail-container">
+    <img mat-card-image [src]="video.thumbnail" [alt]="video.title" />
+
+    <div class="stats">
+      <span>
+        <mat-icon>remove_red_eye</mat-icon>
+        {{ video.viewCount | number }}
+      </span>
+      <span>
+        <mat-icon>favorite</mat-icon>
+        {{ video.likeCount | number }}
+      </span>
+      <span>
+        <mat-icon>heart_broken</mat-icon>
+        {{ video.dislikeCount | number }}
+      </span>
+      <span>
+        <mat-icon>forum</mat-icon>
+        {{ video.commentCount | number }}
+      </span>
+    </div>
+  </div>
+
+  <mat-card-content>
+    <h3 class="video-title">{{ video.title }}</h3>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button mat-button class="more-button" [routerLink]="['/video', video.id]">
+      more...
+    </button>
+    <button mat-icon-button>
+      <mat-icon>favorite_border</mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>

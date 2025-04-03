@@ -1,11 +1,30 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { RouterLink } from '@angular/router';
+import { VideoItem } from '../../models/video.model';
 
 @Component({
   selector: 'app-search-item',
-  imports: [],
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule,
+    RouterLink,
+  ],
   templateUrl: './search-item.component.html',
-  styleUrl: './search-item.component.scss'
+  styleUrl: './search-item.component.scss',
 })
 export class SearchItemComponent {
+  @Input({ required: true }) video!: VideoItem;
 
+  isFavorite = false;
+
+  toggleFavorite(): void {
+    this.isFavorite = !this.isFavorite;
+  }
 }

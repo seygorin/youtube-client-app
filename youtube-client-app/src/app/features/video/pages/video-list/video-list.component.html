@@ -1,1 +1,13 @@
-<p>video-list works!</p>
+<div class="video-list-container">
+  <app-search-filter></app-search-filter>
+
+  <div class="videos-grid">
+    @for (video of sortedVideos(); track video.id) {
+    <app-search-item [video]="video"></app-search-item>
+    } @empty {
+    <div class="no-results">
+      <p>No videos found. Try a different search or filter.</p>
+    </div>
+    }
+  </div>
+</div>

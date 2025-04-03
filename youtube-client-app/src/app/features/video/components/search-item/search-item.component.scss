@@ -1,0 +1,80 @@
+.video-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 260px;
+  height: 330px;
+  margin-bottom: 16px;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  background-color: #f8f9fa;
+}
+
+.thumbnail-container {
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 0;
+    padding: 20px;
+  }
+}
+
+.stats {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 0px 30px;
+
+  span {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+
+    mat-icon {
+      font-size: 16px;
+      height: 16px;
+      width: 16px;
+      margin-right: 4px;
+    }
+  }
+}
+
+.video-title {
+  margin: 12px 0;
+  font-size: 18px;
+  font-weight: 500;
+  text-align: center;
+  color: #333;
+  padding: 0 8px;
+
+  overflow: hidden;
+}
+
+.video-description {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.8);
+  height: 4.2em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+mat-card-content {
+  padding: 8px;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: center;
+  padding: 0 0 12px 0;
+
+  .more-button {
+    background-color: skyblue;
+    color: white;
+    min-width: 120px;
+    border-radius: 12px;
+
+    &:hover {
+      background-color: skyblue;
+    }
+  }
+}
