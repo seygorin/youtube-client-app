@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { VideoItem } from '../../models/video.model';
+import { PublicationDateColorDirective } from '../../../../shared/directives/publication-date-color.directive';
 
 @Component({
   selector: 'app-search-item',
@@ -15,6 +16,7 @@ import { VideoItem } from '../../models/video.model';
     MatButtonModule,
     MatIconModule,
     RouterLink,
+    PublicationDateColorDirective,
   ],
   templateUrl: './search-item.component.html',
   styleUrl: './search-item.component.scss',

@@ -1,4 +1,8 @@
-<mat-card class="video-card">
+<mat-card
+  class="video-card"
+  appPublicationDateColor
+  [publishedAt]="video.publishedAt"
+>
   <div class="thumbnail-container">
     <img mat-card-image [src]="video.thumbnail" [alt]="video.title" />
 

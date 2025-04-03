@@ -12,7 +12,7 @@ export class VideoService {
       title: 'Introduction to Angular - Learning Angular',
       description:
         'In this series, learn how to build your first Angular application. Angular is a web framework that allows teams to deliver web apps with confidence. Discover how these tools build scalable applications.',
-      publishedAt: '2024-06-11T12:42:19.000Z',
+      publishedAt: '2025-03-15T12:42:19.000Z',
       thumbnail: 'https://i.ytimg.com/vi/xAT0lHYhHMY/maxresdefault.jpg',
       viewCount: 33265,
       likeCount: 1173,
@@ -39,7 +39,7 @@ export class VideoService {
       description:
         'Learn about Angular Signals, the new primitive for managing state in Angular applications. Discover how Signals offer an elegant alternative to RxJS for reactive programming.',
       thumbnail: 'https://i.ytimg.com/vi/REu2BcnlD34/maxresdefault.jpg',
-      publishedAt: '2023-12-01T14:25:00Z',
+      publishedAt: '2024-12-01T14:25:00Z',
       viewCount: 45000,
       likeCount: 2100,
       dislikeCount: 30,
@@ -52,7 +52,7 @@ export class VideoService {
       description:
         'Discover how Standalone Components simplify Angular development by reducing the need for NgModules. Learn the benefits and implementation details of this new paradigm.',
       thumbnail: 'https://i.ytimg.com/vi/qbPTdW7KgOg/maxresdefault.jpg',
-      publishedAt: '2024-01-15T11:10:00Z',
+      publishedAt: '2025-04-04T11:10:00Z',
       viewCount: 28500,
       likeCount: 1560,
       dislikeCount: 12,

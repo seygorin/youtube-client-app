@@ -33,13 +33,21 @@ export class SearchFilterComponent {
   isDescending = this.filterService.isDescending;
 
   sortByDate(): void {
-    const direction = this.isAscending() ? 'asc' : 'desc';
-    this.filterService.setSorting('date', direction);
+    if (this.isSortingByDate()) {
+      this.filterService.toggleSortDirection();
+    } else {
+      const direction = this.isAscending() ? 'asc' : 'desc';
+      this.filterService.setSorting('date', direction);
+    }
   }
 
   sortByViews(): void {
-    const direction = this.isAscending() ? 'asc' : 'desc';
-    this.filterService.setSorting('viewCount', direction);
+    if (this.isSortingByViews()) {
+      this.filterService.toggleSortDirection();
+    } else {
+      const direction = this.isAscending() ? 'asc' : 'desc';
+      this.filterService.setSorting('viewCount', direction);
+    }
   }
 
   toggleDirection(): void {
