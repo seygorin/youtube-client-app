@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatIconModule } from '@angular/material/icon';
-import ThemeService from '../services/theme.service';
+import ThemeService from '../../../core/services/theme.service';
 
 @Component({
   selector: 'app-theme-toggle',

@@ -1,5 +1,5 @@
 @use "@angular/material" as mat;
-@use "./_theme-colors" as theme-colors;
+@use "./theme-colors" as theme-colors;
 
 $light-theme: mat.define-theme(
   (
