@@ -1,0 +1,43 @@
+@use "@angular/material" as mat;
+@use "../../themes" as themes;
+
+@mixin theme-colors($theme) {
+  $is-dark: mat.get-theme-type($theme) == dark;
+
+  .palette-test {
+    background-color: if($is-dark, #424242, #f5f5f5);
+
+    h2 {
+      color: mat.get-theme-color($theme, error, if($is-dark, 80, 40));
+    }
+
+    h3 {
+      color: mat.get-theme-color($theme, neutral, if($is-dark, 80, 40));
+    }
+
+    [color="secondary"] {
+      @include mat.button-color($theme, $color-variant: secondary);
+    }
+
+    [color="tertiary"] {
+      @include mat.button-color($theme, $color-variant: tertiary);
+    }
+
+    [color="error"] {
+      @include mat.button-color($theme, $color-variant: error);
+    }
+  }
+
+  mat-card {
+    background-color: if($is-dark, #424242, white);
+    color: if($is-dark, white, rgba(0, 0, 0, 0.87));
+  }
+}
+
+:host {
+  @include theme-colors(themes.$light-theme);
+}
+
+:host-context(.dark-theme) {
+  @include theme-colors(themes.$dark-theme);
+}

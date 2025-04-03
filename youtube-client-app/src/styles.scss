@@ -1,0 +1,31 @@
+@use "@angular/material" as mat;
+@use "./themes" as themes;
+
+@include mat.core();
+
+html {
+  @include mat.core-theme(themes.$light-theme);
+  @include mat.button-theme(themes.$light-theme);
+  @include mat.card-theme(themes.$light-theme);
+}
+
+.dark-theme {
+  background-color: #545454;
+  color: white;
+
+  @include mat.core-color(themes.$dark-theme);
+  @include mat.button-color(themes.$dark-theme);
+  @include mat.card-color(themes.$dark-theme);
+}
+
+body {
+  transition: background-color 0.3s ease;
+}
+
+:root {
+  --is-dark-theme: 0;
+}
+
+.dark-theme {
+  --is-dark-theme: 1;
+}
