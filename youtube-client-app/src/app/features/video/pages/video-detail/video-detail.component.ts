@@ -43,6 +43,10 @@ export class VideoDetailComponent implements OnInit {
         const videoData = this.videoService.getVideoById(videoId);
         if (videoData) {
           this.video.set(videoData);
+        } else {
+          void this.router.navigate(['/not-found'], {
+            skipLocationChange: true,
+          });
         }
       }
     });
