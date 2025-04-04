@@ -1,6 +1,4 @@
 <div class="video-list-container">
-  <app-search-filter></app-search-filter>
-
   <div class="videos-grid">
     @for (video of sortedVideos(); track video.id) {
     <app-search-item [video]="video"></app-search-item>

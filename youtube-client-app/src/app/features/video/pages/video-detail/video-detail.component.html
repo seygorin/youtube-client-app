@@ -1,1 +1,61 @@
-<p>video-detail works!</p>
+<div class="video-detail-container" *ngIf="video()">
+  <div class="back-button-container">
+    <button mat-button (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon> Back to videos
+    </button>
+  </div>
+
+  <div
+    class="video-content"
+    appPublicationDateColor
+    [publishedAt]="video()?.publishedAt || ''"
+  >
+    <div class="two-column-layout">
+      <div class="left-column">
+        <div class="video-player">
+          <iframe
+            [src]="getYoutubeEmbedUrl(video()?.id || '')"
+            title="{{ video()?.title }}"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+          >
+          </iframe>
+        </div>
+      </div>
+
+      <div class="right-column">
+        <div class="video-header">
+          <h1 class="video-title">{{ video()?.title }}</h1>
+        </div>
+        <div class="publication-date">
+          <span>{{ video()?.publishedAt | date : "EEEE, MMMM d, y" }}</span>
+        </div>
+
+        <div class="video-description">
+          <h2>Description</h2>
+          <p>{{ video()?.description }}</p>
+        </div>
+
+        <div class="video-stats">
+          <div class="stat-item">
+            <mat-icon>remove_red_eye</mat-icon>
+            <span>{{ video()?.viewCount | number }}</span>
+          </div>
+          <div class="stat-item">
+            <mat-icon>favorite</mat-icon>
+            <span>{{ video()?.likeCount | number }}</span>
+          </div>
+          <div class="stat-item">
+            <mat-icon>heart_broken</mat-icon>
+            <span>{{ video()?.dislikeCount | number }}</span>
+          </div>
+          <div class="stat-item">
+            <mat-icon>forum</mat-icon>
+            <span>{{ video()?.commentCount | number }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

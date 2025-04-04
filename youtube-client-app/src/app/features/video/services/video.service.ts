@@ -87,7 +87,14 @@ export class VideoService {
       });
   });
 
-  constructor(private filterService: FilterService) {}
+  private readonly CUSTOM_VIDEOS_KEY = 'custom_videos';
+
+  private _customVideos = signal<VideoItem[]>([]);
+  customVideos = this._customVideos.asReadonly();
+
+  constructor(private filterService: FilterService) {
+    this.loadCustomVideos();
+  }
 
   setSearchQuery(query: string): void {
     this.searchQuery.set(query);
@@ -99,5 +106,51 @@ export class VideoService {
 
   addVideo(video: VideoItem): void {
     this._videos.update((videos) => [...videos, video]);
+  }
+
+  addCustomVideo(video: VideoItem): void {
+    try {
+      const customVideos = this.getCustomVideos();
+
+      customVideos.push(video);
+
+      localStorage.setItem(
+        this.CUSTOM_VIDEOS_KEY,
+        JSON.stringify(customVideos)
+      );
+
+      this._videos.update((videos) => [...videos, video]);
+      this._customVideos.update((videos) => [...videos, video]);
+
+      console.log('Video successfully added:', video);
+    } catch (error) {
+      console.error('Error adding custom video:', error);
+      throw error;
+    }
+  }
+
+  deleteCustomVideo(videoId: string): void {
+    const customVideos = this.getCustomVideos().filter((v) => v.id !== videoId);
+
+    localStorage.setItem(this.CUSTOM_VIDEOS_KEY, JSON.stringify(customVideos));
+
+    this._videos.update((videos) => videos.filter((v) => v.id !== videoId));
+    this._customVideos.update((videos) =>
+      videos.filter((v) => v.id !== videoId)
+    );
+  }
+
+  private getCustomVideos(): VideoItem[] {
+    const storedVideos = localStorage.getItem(this.CUSTOM_VIDEOS_KEY);
+    return storedVideos ? JSON.parse(storedVideos) : [];
+  }
+
+  loadCustomVideos(): void {
+    const customVideos = this.getCustomVideos();
+
+    if (customVideos.length > 0) {
+      this._videos.update((videos) => [...videos, ...customVideos]);
+      this._customVideos.set(customVideos);
+    }
   }
 }

@@ -1,0 +1,81 @@
+.create-video-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 0 20px;
+
+  mat-card {
+    padding: 20px;
+  }
+
+  mat-card-header {
+    margin-bottom: 20px;
+
+    mat-card-title {
+      font-size: 24px;
+      text-align: center;
+    }
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+
+  label {
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #666;
+  }
+
+  input,
+  textarea {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+
+    &:focus {
+      outline: none;
+      border-color: #3f51b5;
+    }
+
+    &.invalid {
+      border-color: #f44336;
+    }
+  }
+}
+
+.error-message {
+  color: #f44336;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.form-error {
+  color: #f44336;
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 0 0;
+
+  button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    mat-icon {
+      margin-right: 4px;
+    }
+  }
+}

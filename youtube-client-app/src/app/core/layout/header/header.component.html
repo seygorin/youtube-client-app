@@ -1,4 +1,6 @@
 <mat-toolbar color="primary">
+  <app-theme-toggle></app-theme-toggle>
+
   <div class="toolbar-container">
     <div class="logo" routerLink="/">
       <mat-icon>play_arrow</mat-icon>
@@ -13,6 +15,7 @@
         <span>search</span>
       </button>
     </div>
+    @if (navigationService.isHomePage()) {
     <button
       class="filter-button"
       mat-icon-button
@@ -21,12 +24,42 @@
     >
       <mat-icon>tune</mat-icon>
     </button>
+    }
   </div>
 
   <div class="action-buttons">
-    <span>Your Name</span>
-    <button mat-icon-button routerLink="/login" matTooltip="Login">
-      <mat-icon>account_circle</mat-icon>
+    @if (authService.isAuthenticated() && authService.currentUser()) {
+    <span class="username">{{ authService.currentUser()?.name }}</span>
+    } @if (authService.isAuthenticated()) {
+    <button
+      mat-icon-button
+      routerLink="/admin"
+      class="admin-button"
+      matTooltip="Admin Panel"
+    >
+      <mat-icon>settings</mat-icon>
     </button>
+    <button
+      mat-icon-button
+      (click)="authService.logout()"
+      class="logout-button"
+      matTooltip="Logout"
+    >
+      <mat-icon>exit_to_app</mat-icon>
+    </button>
+    } @else {
+    <button
+      mat-icon-button
+      routerLink="/login"
+      class="login-button"
+      matTooltip="Login"
+    >
+      <mat-icon>login</mat-icon>
+    </button>
+    }
   </div>
 </mat-toolbar>
+
+@if (navigationService.isHomePage()) {
+<app-search-filter></app-search-filter>
+}

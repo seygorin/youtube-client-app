@@ -10,6 +10,10 @@ import { RouterLink } from '@angular/router';
 import { debounceTime, filter } from 'rxjs/operators';
 import { FilterService } from '../../services/filter.service';
 import { VideoService } from '../../../features/video/services/video.service';
+import { SearchFilterComponent } from '../../../features/video/components/search-filter/search-filter.component';
+import { AuthService } from '../../auth/services/auth.service';
+import { NavigationService } from '../../services/navigation.service';
+import ThemeToggleComponent from '../../../shared/components/theme-toggle/theme-toggle.component';
 
 @Component({
   selector: 'app-header',
@@ -23,6 +27,8 @@ import { VideoService } from '../../../features/video/services/video.service';
     MatFormFieldModule,
     ReactiveFormsModule,
     RouterLink,
+    SearchFilterComponent,
+    ThemeToggleComponent,
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
@@ -30,6 +36,8 @@ import { VideoService } from '../../../features/video/services/video.service';
 export class HeaderComponent {
   filterService = inject(FilterService);
   videoService = inject(VideoService);
+  authService = inject(AuthService);
+  navigationService = inject(NavigationService);
 
   searchControl = new FormControl('');
 

@@ -25,6 +25,10 @@ export class FilterService {
     this.showFilters.update((value) => !value);
   }
 
+  hideFilters(): void {
+    this.showFilters.set(false);
+  }
+
   setSorting(field: 'date' | 'viewCount', direction: 'asc' | 'desc'): void {
     this._sortingOption.set({ field, direction });
   }

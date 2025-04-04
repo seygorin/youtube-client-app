@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SearchFilterComponent } from '../../components/search-filter/search-filter.component';
 import { SearchItemComponent } from '../../components/search-item/search-item.component';
 import { VideoService } from '../../services/video.service';
 import { FilterService } from '../../../../core/services/filter.service';
@@ -8,7 +7,7 @@ import { FilterService } from '../../../../core/services/filter.service';
 @Component({
   selector: 'app-video-list',
   standalone: true,
-  imports: [CommonModule, SearchFilterComponent, SearchItemComponent],
+  imports: [CommonModule, SearchItemComponent],
   templateUrl: './video-list.component.html',
   styleUrl: './video-list.component.scss',
 })
