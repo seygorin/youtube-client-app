@@ -23,10 +23,4 @@ import { PublicationDateColorDirective } from '../../../../shared/directives/pub
 })
 export class SearchItemComponent {
   @Input({ required: true }) video!: VideoItem;
-
-  isFavorite = false;
-
-  toggleFavorite(): void {
-    this.isFavorite = !this.isFavorite;
-  }
 }

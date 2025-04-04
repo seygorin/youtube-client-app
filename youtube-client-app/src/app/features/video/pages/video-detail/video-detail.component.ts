@@ -34,7 +34,6 @@ export class VideoDetailComponent implements OnInit {
   private sanitizer = inject(DomSanitizer);
 
   video = signal<VideoItem | undefined>(undefined);
-  isFavorite = signal<boolean>(false);
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
