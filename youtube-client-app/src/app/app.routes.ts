@@ -14,12 +14,13 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
-    path: '',
+    path: 'video',
     loadChildren: () =>
       import('./features/video/video.routes').then((m) => m.VIDEO_ROUTES),
   },
   {
-    path: 'video',
+    path: '',
+    pathMatch: 'full',
     loadChildren: () =>
       import('./features/video/video.routes').then((m) => m.VIDEO_ROUTES),
   },
