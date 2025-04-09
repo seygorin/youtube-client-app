@@ -1,6 +1,9 @@
-import { Injectable, signal, computed } from '@angular/core';
+import { Injectable, signal, computed, inject } from '@angular/core';
 import { FilterService } from '../../../core/services/filter.service';
 import { VideoItem } from '../models/video.model';
+import { SearchService } from './search.service';
+import { YoutubeApiService } from './youtube-api.service';
+import { catchError, map, Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -61,6 +64,9 @@ export class VideoService {
     },
   ]);
 
+  private searchService = inject(SearchService);
+  private youtubeApiService = inject(YoutubeApiService);
+
   searchQuery = signal<string>('');
 
   sortedVideos = computed(() => {
@@ -100,8 +106,24 @@ export class VideoService {
     this.searchQuery.set(query);
   }
 
-  getVideoById(id: string): VideoItem | undefined {
-    return this._videos().find((video) => video.id === id);
+  getVideoById(id: string): Observable<VideoItem | undefined> {
+    const localVideo = this._videos().find((video) => video.id === id);
+    if (localVideo) {
+      return of(localVideo);
+    }
+
+    const searchVideo = this.searchService.getVideoById(id);
+    if (searchVideo) {
+      return of(searchVideo);
+    }
+
+    return this.youtubeApiService.getVideoDetails(id).pipe(
+      map((videos) => (videos.length > 0 ? videos[0] : undefined)),
+      catchError((error) => {
+        console.error('Error fetching video details:', error);
+        return of(undefined);
+      })
+    );
   }
 
   addVideo(video: VideoItem): void {

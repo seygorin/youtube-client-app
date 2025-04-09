@@ -54,7 +54,9 @@ export class HeaderComponent {
   onSearch(): void {
     const query = this.searchControl.value;
     if (query && query.trim().length >= 3) {
-      void this.router.navigate(['/search-results']);
+      void this.router.navigate(['/search-results'], {
+        queryParams: { query: query.trim() },
+      });
     }
   }
 }

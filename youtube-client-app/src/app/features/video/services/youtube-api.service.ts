@@ -60,4 +60,8 @@ export class YoutubeApiService {
         })
       );
   }
+
+  getVideoById(videoId: string): Observable<VideoItem[]> {
+    return this.getVideoDetails(videoId);
+  }
 }

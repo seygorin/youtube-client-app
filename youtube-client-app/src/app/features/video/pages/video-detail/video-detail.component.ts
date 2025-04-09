@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { VideoService } from '../../services/video.service';
 import { VideoItem } from '../../models/video.model';
@@ -22,6 +23,7 @@ import { PublicationDateColorDirective } from '../../../../shared/directives/pub
     MatIconModule,
     MatTooltipModule,
     MatDividerModule,
+    MatProgressSpinnerModule,
     PublicationDateColorDirective,
   ],
   templateUrl: './video-detail.component.html',
@@ -35,18 +37,31 @@ export class VideoDetailComponent implements OnInit {
 
   video = signal<VideoItem | undefined>(undefined);
 
+  isLoading = signal<boolean>(false);
+  error = signal<string | null>(null);
+
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       const videoId = params.get('id');
       if (videoId) {
-        const videoData = this.videoService.getVideoById(videoId);
-        if (videoData) {
-          this.video.set(videoData);
-        } else {
-          void this.router.navigate(['/not-found'], {
-            skipLocationChange: true,
-          });
-        }
+        this.isLoading.set(true);
+        this.videoService.getVideoById(videoId).subscribe({
+          next: (videoData) => {
+            if (videoData) {
+              this.video.set(videoData);
+
+              this.isLoading.set(false);
+            } else {
+              this.error.set('Video not found');
+              this.isLoading.set(false);
+            }
+          },
+          error: (err) => {
+            console.error('Error loading video:', err);
+            this.error.set('Error loading video. Please try again.');
+            this.isLoading.set(false);
+          },
+        });
       }
     });
   }

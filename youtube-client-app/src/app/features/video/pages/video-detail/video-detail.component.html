@@ -61,3 +61,15 @@
     </div>
   </div>
 </div>
+
+@if (isLoading()) {
+<div class="loading-container">
+  <mat-spinner diameter="50"></mat-spinner>
+  <p>Loading video details...</p>
+</div>
+} @else if (error()) {
+<div class="error-container">
+  <p class="error-message">{{ error() }}</p>
+  <button mat-button routerLink="/">Return to Home</button>
+</div>
+}

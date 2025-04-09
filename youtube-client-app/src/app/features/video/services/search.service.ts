@@ -67,4 +67,13 @@ export class SearchService {
     this._searchResults.next([]);
     this._searchError.next(null);
   }
+
+  saveSearchResults(videos: VideoItem[]): void {
+    this._searchResults.next(videos);
+  }
+
+  getVideoById(videoId: string): VideoItem | undefined {
+    const searchResults = this._searchResults.getValue();
+    return searchResults.find((video) => video.id === videoId);
+  }
 }
