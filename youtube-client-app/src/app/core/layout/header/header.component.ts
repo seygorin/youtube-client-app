@@ -6,13 +6,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
-import { debounceTime, filter } from 'rxjs/operators';
-import { FilterService } from '../../services/filter.service';
-import { VideoService } from '../../../features/video/services/video.service';
+import { Router, RouterLink } from '@angular/router';
 import { SearchFilterComponent } from '../../../features/video/components/search-filter/search-filter.component';
 import { AuthService } from '../../auth/services/auth.service';
 import { NavigationService } from '../../services/navigation.service';
+import { SearchService } from '../../../features/video/services/search.service';
+import { FilterService } from '../../services/filter.service';
 import ThemeToggleComponent from '../../../shared/components/theme-toggle/theme-toggle.component';
 
 @Component({
@@ -35,24 +34,27 @@ import ThemeToggleComponent from '../../../shared/components/theme-toggle/theme-
 })
 export class HeaderComponent {
   filterService = inject(FilterService);
-  videoService = inject(VideoService);
   authService = inject(AuthService);
   navigationService = inject(NavigationService);
+  searchService = inject(SearchService);
+  router = inject(Router);
 
   searchControl = new FormControl('');
 
   constructor() {
-    this.searchControl.valueChanges
-      .pipe(
-        debounceTime(300),
-        filter((value) => value !== null)
-      )
-      .subscribe((value) => {
-        this.videoService.setSearchQuery(value || '');
-      });
+    this.searchControl.valueChanges.subscribe((value) => {
+      this.searchService.setSearchQuery(value || '');
+    });
   }
 
   toggleFiltering(): void {
     this.filterService.toggleFilters();
+  }
+
+  onSearch(): void {
+    const query = this.searchControl.value;
+    if (query && query.trim().length >= 3) {
+      void this.router.navigate(['/search-results']);
+    }
   }
 }

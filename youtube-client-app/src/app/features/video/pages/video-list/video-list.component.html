@@ -1,10 +1,11 @@
 <div class="video-list-container">
   <div class="videos-grid">
-    @for (video of sortedVideos(); track video.id) {
+    @if (sortedVideos().length > 0) { @for (video of sortedVideos(); track
+    video.id) {
     <app-search-item [video]="video"></app-search-item>
-    } @empty {
+    } } @else {
     <div class="no-results">
-      <p>No videos found. Try a different search or filter.</p>
+      <p>No videos found. Try a different filter or search for videos.</p>
     </div>
     }
   </div>

@@ -14,6 +14,13 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
+    path: 'search-results',
+    loadComponent: () =>
+      import(
+        './features/video/pages/search-results/search-results.component'
+      ).then((m) => m.SearchResultsComponent),
+  },
+  {
     path: 'video',
     loadChildren: () =>
       import('./features/video/video.routes').then((m) => m.VIDEO_ROUTES),
@@ -25,10 +32,14 @@ export const routes: Routes = [
       import('./features/video/video.routes').then((m) => m.VIDEO_ROUTES),
   },
   {
-    path: '**',
+    path: 'not-found',
     loadComponent: () =>
       import('./shared/components/not-found/not-found.component').then(
         (m) => m.NotFoundComponent
       ),
+  },
+  {
+    path: '**',
+    redirectTo: 'not-found',
   },
 ];

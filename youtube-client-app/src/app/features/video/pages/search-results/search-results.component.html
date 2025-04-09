@@ -1,0 +1,30 @@
+<div class="search-results-container">
+  <div class="search-info">
+    <h1>Search Results for: "{{ searchQuery }}"</h1>
+    <button class="back-button" routerLink="/">Back to Home</button>
+  </div>
+
+  @if (isLoading) {
+  <div class="loading-container">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p>Searching videos...</p>
+  </div>
+  } @if (searchError) {
+  <div class="error-message">
+    {{ searchError }}
+  </div>
+  }
+
+  <div class="videos-grid">
+    @if (searchResults.length > 0) { @for (video of searchResults; track
+    video.id) {
+    <app-search-item [video]="video"></app-search-item>
+    } } @else if (!isLoading) {
+    <div class="no-results">
+      <p>
+        No videos found for "{{ searchQuery }}". Try a different search query.
+      </p>
+    </div>
+    }
+  </div>
+</div>

@@ -1,7 +1,32 @@
-.video-list-container {
+.search-results-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
+}
+
+.search-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+
+  h1 {
+    font-size: 24px;
+    margin: 0;
+  }
+
+  .back-button {
+    background-color: #f0f0f0;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+
+    &:hover {
+      background-color: #e0e0e0;
+    }
+  }
 }
 
 .videos-grid {

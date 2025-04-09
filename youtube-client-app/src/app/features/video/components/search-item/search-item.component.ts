@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { RouterLink } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
 import { VideoItem } from '../../models/video.model';
 import { PublicationDateColorDirective } from '../../../../shared/directives/publication-date-color.directive';
 
@@ -12,15 +12,15 @@ import { PublicationDateColorDirective } from '../../../../shared/directives/pub
   standalone: true,
   imports: [
     CommonModule,
+    RouterModule,
     MatCardModule,
-    MatButtonModule,
     MatIconModule,
-    RouterLink,
+    MatButtonModule,
     PublicationDateColorDirective,
   ],
   templateUrl: './search-item.component.html',
   styleUrl: './search-item.component.scss',
 })
 export class SearchItemComponent {
-  @Input({ required: true }) video!: VideoItem;
+  @Input() video!: VideoItem;
 }
