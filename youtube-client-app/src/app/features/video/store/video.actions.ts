@@ -1,5 +1,6 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
 import { VideoItem } from '../models/video.model';
+import { SortingOption } from '../../../shared/models/sorting.model';
 
 export const VideoActions = createActionGroup({
   source: 'Video',
@@ -29,5 +30,12 @@ export const VideoActions = createActionGroup({
     'Search Videos Success': props<{ videos: VideoItem[] }>(),
     'Search Videos Failure': props<{ error: string }>(),
     'Clear Search Results': emptyProps(),
+
+    'Set Sorting': props<{ sorting: SortingOption }>(),
+    'Toggle Sort Direction': emptyProps(),
+    'Toggle Filters Visibility': emptyProps(),
+    'Set Filters Visibility': props<{ visible: boolean }>(),
+
+    'Set Filter Keyword': props<{ keyword: string }>(),
   },
 });

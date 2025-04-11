@@ -1,12 +1,11 @@
-@if (showFilters()) {
-
+@if (showFilters$ | async) {
 <div class="sorting-container">
   <p>Sorting by:</p>
 
   <div class="sort-options">
     <a
       href="javascript:void(0)"
-      [class.active]="isSortingByDate()"
+      [class.active]="isSortingByDate$ | async"
       (click)="sortByDate()"
     >
       date
@@ -14,7 +13,7 @@
 
     <a
       href="javascript:void(0)"
-      [class.active]="isSortingByViews()"
+      [class.active]="isSortingByViews$ | async"
       (click)="sortByViews()"
     >
       count of views
@@ -22,10 +21,13 @@
 
     <div class="search-by-word">
       <span>by word or sentence</span>
-      <input type="text" />
+      <input
+        type="text"
+        [(ngModel)]="filterKeyword"
+        (input)="onFilterKeywordChange(filterKeyword)"
+      />
     </div>
   </div>
-
 </div>
 
 }

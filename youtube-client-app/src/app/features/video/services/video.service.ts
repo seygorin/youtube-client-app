@@ -7,24 +7,20 @@ import {
   selectAllVideos,
   selectCustomVideos,
   selectLoading,
-  selectSortedVideos,
+  selectSortedAndFilteredVideos,
   selectVideoById,
 } from '../store/video.selectors';
-import { FilterService } from '../../../core/services/filter.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class VideoService {
   private store = inject(Store);
-  private filterService = inject(FilterService);
 
   readonly videos$ = this.store.select(selectAllVideos);
   readonly customVideos$ = this.store.select(selectCustomVideos);
   readonly loading$ = this.store.select(selectLoading);
-  readonly sortedVideos$ = this.store.select(
-    selectSortedVideos(this.filterService)
-  );
+  readonly sortedVideos$ = this.store.select(selectSortedAndFilteredVideos);
 
   constructor() {
     this.loadCustomVideos();
@@ -36,7 +32,6 @@ export class VideoService {
 
   getVideoById(id: string): Observable<VideoItem | null> {
     this.store.dispatch(VideoActions.selectVideo({ videoId: id }));
-
     return this.store.select(selectVideoById(id));
   }
 

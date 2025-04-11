@@ -1,42 +1,71 @@
-import { Injectable, signal, computed } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { SortingOption } from '../../shared/models/sorting.model';
+import { VideoActions } from '../../features/video/store/video.actions';
+import {
+  selectShowFilters,
+  selectSorting,
+  selectIsSortingByDate,
+  selectIsSortingByViews,
+  selectIsAscending,
+  selectIsDescending,
+  selectFilterKeyword,
+} from '../../features/video/store/video.selectors';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FilterService {
-  showFilters = signal<boolean>(false);
+  private store = inject(Store);
 
-  private _sortingOption = signal<SortingOption>({
-    field: 'date',
-    direction: 'desc',
-  });
-
-  isSortingByDate = computed(() => this._sortingOption().field === 'date');
-  isSortingByViews = computed(
-    () => this._sortingOption().field === 'viewCount'
+  readonly showFilters$: Observable<boolean> =
+    this.store.select(selectShowFilters);
+  readonly sorting$: Observable<SortingOption> =
+    this.store.select(selectSorting);
+  readonly isSortingByDate$: Observable<boolean> = this.store.select(
+    selectIsSortingByDate
   );
-  isAscending = computed(() => this._sortingOption().direction === 'asc');
-  isDescending = computed(() => this._sortingOption().direction === 'desc');
-
-  currentSorting = this._sortingOption.asReadonly();
+  readonly isSortingByViews$: Observable<boolean> = this.store.select(
+    selectIsSortingByViews
+  );
+  readonly isAscending$: Observable<boolean> =
+    this.store.select(selectIsAscending);
+  readonly isDescending$: Observable<boolean> =
+    this.store.select(selectIsDescending);
+  readonly filterKeyword$: Observable<string> =
+    this.store.select(selectFilterKeyword);
 
   toggleFilters(): void {
-    this.showFilters.update((value) => !value);
+    this.store.dispatch(VideoActions.toggleFiltersVisibility());
   }
 
   hideFilters(): void {
-    this.showFilters.set(false);
+    this.store.dispatch(VideoActions.setFiltersVisibility({ visible: false }));
   }
 
   setSorting(field: 'date' | 'viewCount', direction: 'asc' | 'desc'): void {
-    this._sortingOption.set({ field, direction });
+    this.store.dispatch(
+      VideoActions.setSorting({
+        sorting: { field, direction },
+      })
+    );
   }
 
   toggleSortDirection(): void {
-    this._sortingOption.update((current) => ({
-      ...current,
-      direction: current.direction === 'asc' ? 'desc' : 'asc',
-    }));
+    this.store.dispatch(VideoActions.toggleSortDirection());
+  }
+
+  currentSorting(): SortingOption {
+    let result: SortingOption = { field: 'date', direction: 'desc' };
+    const subscription = this.sorting$.subscribe((sorting) => {
+      result = sorting;
+    });
+    subscription.unsubscribe();
+    return result;
+  }
+
+  setFilterKeyword(keyword: string): void {
+    this.store.dispatch(VideoActions.setFilterKeyword({ keyword }));
   }
 }

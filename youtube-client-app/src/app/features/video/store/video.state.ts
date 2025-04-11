@@ -1,16 +1,6 @@
-import { VideoItem } from '../models/video.model';
+import { VideoState } from '../models/state.model';
 
 export const CUSTOM_VIDEOS_KEY = 'custom_videos';
-
-export interface VideoState {
-  videos: VideoItem[];
-  customVideos: VideoItem[];
-  selectedVideo: VideoItem | null;
-  searchResults: VideoItem[];
-  searchQuery: string;
-  loading: boolean;
-  error: string | null;
-}
 
 export const initialVideoState: VideoState = {
   videos: [
@@ -71,6 +61,12 @@ export const initialVideoState: VideoState = {
   selectedVideo: null,
   searchResults: [],
   searchQuery: '',
+  sorting: {
+    field: 'date',
+    direction: 'desc',
+  },
+  filterKeyword: '',
+  showFilters: false,
   loading: false,
   error: null,
 };

@@ -130,5 +130,36 @@ export const videoReducer = createReducer(
     ...state,
     searchResults: [],
     searchQuery: '',
+  })),
+
+  on(VideoActions.setSorting, (state, { sorting }) => ({
+    ...state,
+    sorting: sorting,
+  })),
+
+  on(VideoActions.toggleSortDirection, (state) => ({
+    ...state,
+    sorting: {
+      ...state.sorting,
+      direction:
+        state.sorting.direction === 'asc'
+          ? ('desc' as const)
+          : ('asc' as const),
+    },
+  })),
+
+  on(VideoActions.toggleFiltersVisibility, (state) => ({
+    ...state,
+    showFilters: !state.showFilters,
+  })),
+
+  on(VideoActions.setFiltersVisibility, (state, { visible }) => ({
+    ...state,
+    showFilters: visible,
+  })),
+
+  on(VideoActions.setFilterKeyword, (state, { keyword }) => ({
+    ...state,
+    filterKeyword: keyword,
   }))
 );

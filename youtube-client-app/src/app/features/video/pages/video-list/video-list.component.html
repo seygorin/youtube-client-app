@@ -1,12 +1,12 @@
 <div class="video-list-container">
   <div class="videos-grid">
-    @if ((sortedVideos$ | async)?.length) { @for (video of sortedVideos$ |
-    async; track video.id) {
+    @if (sortedVideos$ | async; as videos) { @if (videos.length > 0) { @for
+    (video of videos; track video.id) {
     <app-search-item [video]="video"></app-search-item>
     } } @else {
     <div class="no-results">
       <p>No videos found. Try a different filter or search for videos.</p>
     </div>
-    }
+    } }
   </div>
 </div>
