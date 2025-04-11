@@ -1,7 +1,7 @@
 <div class="video-list-container">
   <div class="videos-grid">
-    @if (sortedVideos().length > 0) { @for (video of sortedVideos(); track
-    video.id) {
+    @if ((sortedVideos$ | async)?.length) { @for (video of sortedVideos$ |
+    async; track video.id) {
     <app-search-item [video]="video"></app-search-item>
     } } @else {
     <div class="no-results">

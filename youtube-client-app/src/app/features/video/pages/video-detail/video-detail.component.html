@@ -14,7 +14,7 @@
       <div class="left-column">
         <div class="video-player">
           <iframe
-            [src]="getYoutubeEmbedUrl(video()?.id || '')"
+            [src]="videoEmbedUrl()"
             title="{{ video()?.title }}"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
