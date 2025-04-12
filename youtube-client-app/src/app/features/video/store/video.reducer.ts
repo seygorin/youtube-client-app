@@ -161,5 +161,30 @@ export const videoReducer = createReducer(
   on(VideoActions.setFilterKeyword, (state, { keyword }) => ({
     ...state,
     filterKeyword: keyword,
+  })),
+
+  on(VideoActions.loadPopularVideos, (state) => ({
+    ...state,
+    loading: !state.videosLoaded,
+    error: null,
+  })),
+
+  on(VideoActions.loadPopularVideosSuccess, (state, { videos }) => ({
+    ...state,
+    videos,
+    loading: false,
+    videosLoaded: true,
+  })),
+
+  on(VideoActions.loadPopularVideosFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error,
+    videosLoaded: false,
+  })),
+
+  on(VideoActions.resetVideosLoaded, (state) => ({
+    ...state,
+    videosLoaded: false,
   }))
 );

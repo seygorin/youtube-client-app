@@ -12,4 +12,5 @@ export interface VideoState {
   showFilters: boolean;
   loading: boolean;
   error: string | null;
+  videosLoaded: boolean;
 }

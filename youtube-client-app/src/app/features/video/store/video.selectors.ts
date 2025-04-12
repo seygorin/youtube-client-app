@@ -143,3 +143,8 @@ export const selectVideoById = (videoId: string) =>
       return foundInSearch || null;
     }
   );
+
+export const selectVideosLoaded = createSelector(
+  selectVideoState,
+  (state) => state.videosLoaded
+);

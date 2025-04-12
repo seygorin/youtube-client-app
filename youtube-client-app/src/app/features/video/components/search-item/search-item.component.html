@@ -4,26 +4,26 @@
   [publishedAt]="video.publishedAt"
 >
   <div class="thumbnail-container">
-    <img mat-card-image [src]="video.thumbnail" [alt]="video.title" />
+    <img [src]="video.thumbnail" [alt]="video.title" />
+  </div>
 
-    <div class="stats">
-      <span>
-        <mat-icon>remove_red_eye</mat-icon>
-        {{ video.viewCount | number }}
-      </span>
-      <span>
-        <mat-icon>favorite</mat-icon>
-        {{ video.likeCount | number }}
-      </span>
-      <span>
-        <mat-icon>heart_broken</mat-icon>
-        {{ video.dislikeCount | number }}
-      </span>
-      <span>
-        <mat-icon>forum</mat-icon>
-        {{ video.commentCount | number }}
-      </span>
-    </div>
+  <div class="stats">
+    <span>
+      <mat-icon>remove_red_eye</mat-icon>
+      {{ video.viewCount | number }}
+    </span>
+    <span>
+      <mat-icon>favorite</mat-icon>
+      {{ video.likeCount | number }}
+    </span>
+    <span>
+      <mat-icon>heart_broken</mat-icon>
+      {{ video.dislikeCount | number }}
+    </span>
+    <span>
+      <mat-icon>forum</mat-icon>
+      {{ video.commentCount | number }}
+    </span>
   </div>
 
   <mat-card-content>

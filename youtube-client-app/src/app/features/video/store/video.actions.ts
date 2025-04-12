@@ -37,5 +37,11 @@ export const VideoActions = createActionGroup({
     'Set Filters Visibility': props<{ visible: boolean }>(),
 
     'Set Filter Keyword': props<{ keyword: string }>(),
+
+    'Load Popular Videos': emptyProps(),
+    'Load Popular Videos Success': props<{ videos: VideoItem[] }>(),
+    'Load Popular Videos Failure': props<{ error: string }>(),
+
+    'Reset Videos Loaded': emptyProps(),
   },
 });

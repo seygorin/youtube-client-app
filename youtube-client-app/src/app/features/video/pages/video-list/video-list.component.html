@@ -1,4 +1,10 @@
 <div class="video-list-container">
+  @if (isLoading$ | async) {
+  <div class="loading-container">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p>Loading videos...</p>
+  </div>
+  } @else {
   <div class="videos-grid">
     @if (sortedVideos$ | async; as videos) { @if (videos.length > 0) { @for
     (video of videos; track video.id) {
@@ -9,4 +15,5 @@
     </div>
     } }
   </div>
+  }
 </div>

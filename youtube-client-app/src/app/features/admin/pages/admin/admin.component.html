@@ -1,10 +1,5 @@
 <div class="admin-container">
   <div class="admin-header">
-    <div class="user-info">
-      <h1>Admin Panel</h1>
-      <p>Welcome, {{ authService.currentUser()?.name || "Admin" }}</p>
-    </div>
-
     <div class="actions">
       <button mat-raised-button color="primary" (click)="addNewCard()">
         <mat-icon>add</mat-icon>

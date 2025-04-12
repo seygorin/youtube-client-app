@@ -64,4 +64,34 @@ export class YoutubeApiService {
   getVideoById(videoId: string): Observable<VideoItem[]> {
     return this.getVideoDetails(videoId);
   }
+
+  getPopularVideos(maxResults = 10): Observable<VideoItem[]> {
+    return this.http
+      .get<VideoDetailsResponse>(
+        `@youtube/videos?part=snippet,statistics&chart=mostPopular&maxResults=${maxResults}&regionCode=KZ`
+      )
+      .pipe(
+        map((response) => {
+          return response.items.map((item) => ({
+            id: item.id,
+            title: item.snippet.title,
+            description: item.snippet.description,
+            publishedAt: item.snippet.publishedAt,
+            thumbnail: item.snippet.thumbnails.high.url,
+            viewCount: parseInt(item.statistics.viewCount, 10),
+            likeCount: parseInt(item.statistics.likeCount, 10),
+            dislikeCount: item.statistics.dislikeCount
+              ? parseInt(item.statistics.dislikeCount, 10)
+              : 0,
+            commentCount: parseInt(item.statistics.commentCount, 10),
+            channelTitle: item.snippet.channelTitle,
+            videoLink: `https://www.youtube.com/watch?v=${item.id}`,
+          }));
+        }),
+        catchError((error) => {
+          console.error('Error fetching popular videos:', error);
+          return of([]);
+        })
+      );
+  }
 }
