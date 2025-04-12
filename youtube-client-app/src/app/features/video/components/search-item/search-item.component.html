@@ -7,6 +7,12 @@
     <img [src]="video.thumbnail" [alt]="video.title" />
   </div>
 
+  @if (isCustomVideo) {
+  <div class="custom-badge" matTooltip="Custom Video">
+    <mat-icon>star</mat-icon>
+  </div>
+  }
+
   <div class="stats">
     <span>
       <mat-icon>remove_red_eye</mat-icon>

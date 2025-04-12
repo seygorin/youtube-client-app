@@ -9,4 +9,5 @@ export interface VideoItem {
   dislikeCount: number;
   commentCount: number;
   channelTitle: string;
+  isCustom?: boolean;
 }

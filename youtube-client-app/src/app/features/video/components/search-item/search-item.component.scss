@@ -87,3 +87,24 @@ mat-card-actions {
     }
   }
 }
+
+.custom-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: skyblue;
+  color: white;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+}
