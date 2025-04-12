@@ -1,5 +1,7 @@
-@if (showFilters$ | async) {
-<div class="sorting-container">
+<div
+  class="sorting-container"
+  [class.hidden]="(showFilters$ | async) === false"
+>
   <p>Sorting by:</p>
 
   <div class="sort-options">
@@ -29,5 +31,3 @@
     </div>
   </div>
 </div>
-
-}

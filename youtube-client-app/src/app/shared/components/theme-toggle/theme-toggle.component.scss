@@ -1,0 +1,23 @@
+.theme-toggle {
+  display: flex;
+  align-items: center;
+}
+
+mat-icon {
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  user-select: none;
+}
+
+mat-icon:hover {
+  transform: scale(1.1);
+}
+
+mat-icon:active {
+  transform: scale(0.9);
+}
+
+mat-icon:focus-visible {
+  outline: 2px solid var(--mat-sys-primary);
+  border-radius: 4px;
+}

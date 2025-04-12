@@ -1,8 +1,10 @@
 mat-toolbar {
   display: flex;
   justify-content: space-between;
-  background-color: #f0f0f0;
+  background-color: var(--mat-sys-primary-container);
+  color: var(--mat-sys-on-primary-container);
   padding: 0 16px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .toolbar-container {
@@ -19,18 +21,23 @@ mat-toolbar {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  background-color: skyblue;
+  background-color: var(--mat-sys-primary);
   width: 60px;
   height: 40px;
   border-radius: 12px;
+  transition: background-color 0.3s ease;
 
   mat-icon {
     font-size: 30px;
-    color: white;
+    color: var(--mat-sys-on-primary);
     display: flex;
     align-items: center;
     justify-content: center;
   }
+
+	&:hover {
+		background-color: var(--mat-sys-on-primary-container);
+	}
 }
 
 .search-container {
@@ -46,32 +53,42 @@ mat-toolbar {
     height: 14px;
     outline: none;
     flex-grow: 1;
-    background-color: white;
+    background-color: var(--mat-sys-surface);
+    color: var(--mat-sys-on-surface);
     border-radius: 4px 0 0 4px;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   .search-button {
     height: 24px;
     width: 80px;
     padding: 0 10px;
-    background: skyblue;
-    color: white;
+    background: var(--mat-sys-primary);
+    color: var(--mat-sys-on-primary);
     border: none;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 0 4px 4px 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
 
     span {
       font-size: 12px;
     }
+
+    &:hover {
+      background: var(--mat-sys-secondary);
+    }
   }
 }
+
 .filter-button {
   margin-left: 10px;
   border-radius: 5px;
-  background-color: skyblue;
+  background-color: var(--mat-sys-primary);
+  color: var(--mat-sys-on-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
 
   width: 24px;
   height: 24px;
@@ -83,12 +100,16 @@ mat-toolbar {
   justify-content: center;
   align-items: center;
 
+  &:hover {
+    background-color: var(--mat-sys-secondary);
+  }
+
   .mat-icon {
     font-size: 15px;
     width: 15px;
     height: 15px;
     line-height: 15px;
-    color: white;
+    color: var(--mat-sys-on-primary);
   }
 }
 
@@ -98,11 +119,18 @@ mat-toolbar {
   margin-left: auto;
   gap: 8px;
 
+  .username {
+    color: var(--mat-sys-on-surface);
+    margin-right: 8px;
+    font-size: 14px;
+  }
+
   button {
     width: 24px;
     height: 24px;
     border-radius: 5px;
-    background-color: skyblue;
+    background-color: var(--mat-sys-primary);
+    transition: background-color 0.3s ease;
 
     padding: 0;
     min-width: unset;
@@ -111,12 +139,16 @@ mat-toolbar {
     justify-content: center;
     align-items: center;
 
+    &:hover {
+      background-color: var(--mat-sys-secondary);
+    }
+
     .mat-icon {
       font-size: 20px;
       width: 20px;
       height: 20px;
       line-height: 20px;
-      color: white;
+      color: var(--mat-sys-on-primary);
     }
   }
 }
