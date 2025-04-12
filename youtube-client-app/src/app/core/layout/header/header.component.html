@@ -10,6 +10,8 @@
       <input
         [formControl]="searchControl"
         placeholder="What are you want to find out?"
+        (blur)="onInputBlur()"
+        (keyup.enter)="onSearch()"
       />
       <button class="search-button" (click)="onSearch()">
         <span>search</span>

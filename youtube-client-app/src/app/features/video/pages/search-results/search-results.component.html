@@ -1,15 +1,4 @@
 <div class="search-results-container">
-  @if (isLoading) {
-  <div class="loading-container">
-    <mat-spinner diameter="50"></mat-spinner>
-    <p>Searching videos...</p>
-  </div>
-  } @if (searchError) {
-  <div class="error-message">
-    {{ searchError }}
-  </div>
-  }
-
   <div class="videos-grid">
     @if (searchResults.length > 0) { @for (video of searchResults; track
     video.id) {

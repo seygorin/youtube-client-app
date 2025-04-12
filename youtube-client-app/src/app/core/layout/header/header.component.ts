@@ -59,4 +59,11 @@ export class HeaderComponent {
       });
     }
   }
+
+  onInputBlur(): void {
+    const query = this.searchControl.value;
+    if (query && query.trim().length >= 3) {
+      this.onSearch();
+    }
+  }
 }
