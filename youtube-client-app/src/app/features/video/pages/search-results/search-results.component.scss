@@ -14,12 +14,13 @@
   grid-column: 1 / -1;
   text-align: center;
   padding: 50px 20px;
-  background-color: #f5f5f5;
+  background-color: var(--mat-sys-surface-variant);
+  color: var(--mat-sys-on-surface-variant);
   border-radius: 8px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 
   p {
     font-size: 18px;
-    color: #666;
   }
 }
 
@@ -33,15 +34,17 @@
   p {
     margin-top: 16px;
     font-size: 16px;
-    color: #666;
+    color: var(--mat-sys-on-surface-variant);
+    transition: color 0.3s ease;
   }
 }
 
 .error-message {
   text-align: center;
   padding: 16px;
-  background-color: #ffebee;
-  color: #c62828;
+  background-color: var(--mat-sys-error-container);
+  color: var(--mat-sys-on-error-container);
   border-radius: 4px;
   margin-bottom: 20px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
