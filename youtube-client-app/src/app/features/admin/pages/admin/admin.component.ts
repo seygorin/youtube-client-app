@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -28,7 +28,7 @@ import { ConfirmDialogComponent } from '../../../../shared/components/confirm-di
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss',
 })
-export class AdminComponent implements OnInit {
+export class AdminComponent {
   private videoService = inject(VideoService);
   private router = inject(Router);
   protected authService = inject(AuthService);
@@ -51,10 +51,6 @@ export class AdminComponent implements OnInit {
     if (!this.authService.isAuthenticated()) {
       void this.router.navigate(['/login']);
     }
-  }
-
-  ngOnInit(): void {
-    this.videoService.loadCustomVideos();
   }
 
   addNewCard(): void {

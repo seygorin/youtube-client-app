@@ -9,6 +9,4 @@ import { HeaderComponent } from './core/layout/header/header.component';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent {
-  title = 'YouTube Client App';
-}
+export class AppComponent {}

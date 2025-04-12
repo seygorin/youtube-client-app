@@ -22,10 +22,6 @@ export class VideoService {
   readonly loading$ = this.store.select(selectLoading);
   readonly sortedVideos$ = this.store.select(selectSortedAndFilteredVideos);
 
-  constructor() {
-    this.loadCustomVideos();
-  }
-
   getAllVideos(): Observable<VideoItem[]> {
     return this.videos$;
   }

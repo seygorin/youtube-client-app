@@ -7,10 +7,12 @@ import {
   selectAllVideos,
   selectLoading,
   selectSortedAndFilteredVideos,
+  selectVideosLoaded,
 } from '../../store/video.selectors';
-import { Observable, take } from 'rxjs';
+import { Observable, filter, take } from 'rxjs';
 import { VideoActions } from '../../store/video.actions';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 @Component({
   selector: 'app-video-list',
   standalone: true,
@@ -33,8 +35,22 @@ export class VideoListComponent implements OnInit {
       .pipe(take(1))
       .subscribe((videos) => {
         if (!videos || videos.length === 0) {
-          this.store.dispatch(VideoActions.loadPopularVideos());
+          this.loadVideosSequentially();
         }
+      });
+  }
+
+  private loadVideosSequentially(): void {
+    this.store.dispatch(VideoActions.loadPopularVideos());
+
+    this.store
+      .select(selectVideosLoaded)
+      .pipe(
+        filter((loaded) => loaded),
+        take(1)
+      )
+      .subscribe(() => {
+        this.store.dispatch(VideoActions.loadCustomVideos());
       });
   }
 
