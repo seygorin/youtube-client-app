@@ -1,32 +1,26 @@
 @use "@angular/material" as mat;
-@use "./styles/themes" as themes;
-
-@include mat.core();
 
 html {
-  @include mat.core-theme(themes.$light-theme);
-  @include mat.button-theme(themes.$light-theme);
-  @include mat.card-theme(themes.$light-theme);
+  color-scheme: light;
+
+  @include mat.theme(
+    (
+      color: mat.$blue-palette,
+      typography: Roboto,
+      density: 0,
+    )
+  );
 }
 
-.dark-theme {
-  background-color: #545454;
-  color: white;
-
-  @include mat.core-color(themes.$dark-theme);
-  @include mat.button-color(themes.$dark-theme);
-  @include mat.card-color(themes.$dark-theme);
+body.dark-theme + html,
+html.dark-theme {
+  color-scheme: dark;
 }
 
 body {
-  margin: 0px;
+  background: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
   transition: background-color 0.3s ease;
-}
-
-:root {
-  --is-dark-theme: 0;
-}
-
-.dark-theme {
-  --is-dark-theme: 1;
 }

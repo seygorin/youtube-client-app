@@ -14,7 +14,7 @@ class ThemeService {
 
     if (!savedTheme) {
       const prefersDark = window.matchMedia(
-        '(prefers-color-scheme: dark)',
+        '(prefers-color-scheme: dark)'
       ).matches;
       this.setDarkTheme(prefersDark);
     }
@@ -22,16 +22,15 @@ class ThemeService {
 
   setDarkTheme(isDark: boolean) {
     this.isDarkTheme.set(isDark);
-
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
 
     if (isDark) {
-      document.body.classList.add('dark-theme');
+      document.documentElement.classList.add('dark-theme');
     } else {
-      document.body.classList.remove('dark-theme');
+      document.documentElement.classList.remove('dark-theme');
     }
   }
-	
+
   toggleTheme() {
     this.setDarkTheme(!this.isDarkTheme());
   }
