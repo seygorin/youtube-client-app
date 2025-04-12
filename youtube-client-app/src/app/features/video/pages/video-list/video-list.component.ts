@@ -12,11 +12,17 @@ import {
 import { Observable, filter, take } from 'rxjs';
 import { VideoActions } from '../../store/video.actions';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { LoadingSpinnerComponent } from '../../../../shared/components/loading-spinner/loading-spinner.component';
 
 @Component({
   selector: 'app-video-list',
   standalone: true,
-  imports: [CommonModule, SearchItemComponent, MatProgressSpinnerModule],
+  imports: [
+    CommonModule,
+    SearchItemComponent,
+    MatProgressSpinnerModule,
+    LoadingSpinnerComponent,
+  ],
   templateUrl: './video-list.component.html',
   styleUrl: './video-list.component.scss',
 })

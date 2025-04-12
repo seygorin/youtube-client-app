@@ -6,11 +6,11 @@ import { SearchItemComponent } from '../../components/search-item/search-item.co
 import { VideoItem } from '../../models/video.model';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Subscription } from 'rxjs';
-
+import { LoadingSpinnerComponent } from '../../../../shared/components/loading-spinner/loading-spinner.component';
 @Component({
   selector: 'app-search-results',
   standalone: true,
-  imports: [CommonModule, SearchItemComponent, MatProgressSpinnerModule],
+  imports: [CommonModule, SearchItemComponent, MatProgressSpinnerModule, LoadingSpinnerComponent],
   templateUrl: './search-results.component.html',
   styleUrl: './search-results.component.scss',
 })

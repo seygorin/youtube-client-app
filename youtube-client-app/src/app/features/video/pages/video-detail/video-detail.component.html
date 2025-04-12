@@ -1,4 +1,5 @@
-<div class="video-detail-container" *ngIf="video()">
+@if (video()) {
+<div class="video-detail-container">
   <div class="back-button-container">
     <button mat-button (click)="goBack()">
       <mat-icon>arrow_back</mat-icon> Back to videos
@@ -11,7 +12,7 @@
     [publishedAt]="video()?.publishedAt || ''"
   >
     <div class="two-column-layout">
-      <div class="left-column">
+      <div class="left-column">\
         <div class="video-player">
           <iframe
             [src]="videoEmbedUrl()"
@@ -61,12 +62,8 @@
     </div>
   </div>
 </div>
-
-@if (isLoading()) {
-<div class="loading-container">
-  <mat-spinner diameter="50"></mat-spinner>
-  <p>Loading video details...</p>
-</div>
+} @if (isLoading()) {
+<app-loading-spinner />
 } @else if (error()) {
 <div class="error-container">
   <p class="error-message">{{ error() }}</p>

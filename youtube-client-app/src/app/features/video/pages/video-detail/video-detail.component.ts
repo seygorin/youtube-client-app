@@ -12,6 +12,7 @@ import { VideoService } from '../../services/video.service';
 import { VideoItem } from '../../models/video.model';
 import { PublicationDateColorDirective } from '../../../../shared/directives/publication-date-color.directive';
 import { Subscription } from 'rxjs';
+import { LoadingSpinnerComponent } from '../../../../shared/components/loading-spinner/loading-spinner.component';
 
 @Component({
   selector: 'app-video-detail',
@@ -26,6 +27,7 @@ import { Subscription } from 'rxjs';
     MatDividerModule,
     MatProgressSpinnerModule,
     PublicationDateColorDirective,
+    LoadingSpinnerComponent,
   ],
   templateUrl: './video-detail.component.html',
   styleUrl: './video-detail.component.scss',

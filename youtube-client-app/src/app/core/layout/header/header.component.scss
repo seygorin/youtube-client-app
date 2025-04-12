@@ -10,10 +10,8 @@ mat-toolbar {
 .toolbar-container {
   display: flex;
   align-items: center;
-  justify-content: center;
   width: 570px;
-  margin: 0 auto;
-  flex: 1;
+  position: relative;
 }
 
 .logo {
@@ -26,6 +24,7 @@ mat-toolbar {
   height: 40px;
   border-radius: 12px;
   transition: background-color 0.3s ease;
+  flex-shrink: 0;
 
   mat-icon {
     font-size: 30px;
@@ -35,17 +34,18 @@ mat-toolbar {
     justify-content: center;
   }
 
-	&:hover {
-		background-color: var(--mat-sys-on-primary-container);
-	}
+  &:hover {
+    background-color: var(--mat-sys-on-primary-container);
+  }
 }
 
 .search-container {
-  flex: 1;
-  max-width: 480px;
+	flex: 1;
+  width: 420px;
   display: flex;
   align-items: center;
   margin-left: 10px;
+  flex-shrink: 0;
 
   input {
     border: none;
@@ -72,6 +72,7 @@ mat-toolbar {
     justify-content: center;
     border-radius: 0 4px 4px 0;
     transition: background-color 0.3s ease, color 0.3s ease;
+    flex-shrink: 0;
 
     span {
       font-size: 12px;
@@ -84,18 +85,18 @@ mat-toolbar {
 }
 
 .filter-button {
-  margin-left: 10px;
+  position: absolute;
+  right: -30px;
+  top: 50%;
+  transform: translateY(-50%);
   border-radius: 5px;
   background-color: var(--mat-sys-primary);
   color: var(--mat-sys-on-primary);
   transition: background-color 0.3s ease, color 0.3s ease;
-
   width: 24px;
   height: 24px;
-
   padding: 0;
   min-width: unset;
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -116,13 +117,18 @@ mat-toolbar {
 .action-buttons {
   display: flex;
   align-items: center;
-  margin-left: auto;
-  gap: 8px;
+  width: 120px;
+  justify-content: flex-end;
+  flex-shrink: 0;
+	gap: 8px;
 
   .username {
-    color: var(--mat-sys-on-surface);
-    margin-right: 8px;
+    color: var(--mat-sys-on-surface-variant);
     font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 80px;
   }
 
   button {
@@ -131,10 +137,8 @@ mat-toolbar {
     border-radius: 5px;
     background-color: var(--mat-sys-primary);
     transition: background-color 0.3s ease;
-
     padding: 0;
     min-width: unset;
-
     display: flex;
     justify-content: center;
     align-items: center;

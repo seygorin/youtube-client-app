@@ -1,4 +1,7 @@
 <div class="search-results-container">
+  @if (isLoading) {
+  <app-loading-spinner />
+  } @else {
   <div class="videos-grid">
     @if (searchResults.length > 0) { @for (video of searchResults; track
     video.id) {
@@ -11,4 +14,5 @@
     </div>
     }
   </div>
+  }
 </div>
