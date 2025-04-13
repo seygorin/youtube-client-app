@@ -27,6 +27,51 @@
     display: block;
     margin: 0;
   }
+
+  .favorite-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    z-index: 2;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.7);
+      transform: scale(1.1);
+    }
+
+    &.is-favorite {
+      background-color: var(--mat-sys-error-container);
+
+      mat-icon {
+        color: var(--mat-sys-error);
+      }
+
+      &:hover {
+        background-color: var(--mat-sys-error);
+
+        mat-icon {
+          color: var(--mat-sys-on-error);
+        }
+      }
+    }
+
+    mat-icon {
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+    }
+  }
 }
 
 .stats {
@@ -97,7 +142,7 @@ mat-card-actions {
 .custom-badge {
   position: absolute;
   top: 10px;
-  right: 10px;
+  left: 10px;
   background-color: var(--mat-sys-tertiary);
   color: var(--mat-sys-on-tertiary);
   border-radius: 50%;

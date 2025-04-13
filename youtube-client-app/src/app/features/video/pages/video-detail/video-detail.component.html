@@ -12,8 +12,23 @@
     [publishedAt]="video()?.publishedAt || ''"
   >
     <div class="two-column-layout">
-      <div class="left-column">\
+      <div class="left-column">
         <div class="video-player">
+          @if (authService.isAuthenticated()) {
+          <button
+            class="favorite-button"
+            [class.is-favorite]="isFavorite()"
+            (click)="toggleFavorite($event)"
+            matTooltip="{{
+              isFavorite() ? 'Remove from favorites' : 'Add to favorites'
+            }}"
+          >
+            <mat-icon>{{
+              isFavorite() ? "favorite" : "favorite_border"
+            }}</mat-icon>
+          </button>
+          }
+
           <iframe
             [src]="videoEmbedUrl()"
             title="{{ video()?.title }}"

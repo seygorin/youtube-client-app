@@ -5,6 +5,21 @@
 >
   <div class="thumbnail-container">
     <img [src]="video.thumbnail" [alt]="video.title" />
+
+    @if (authService.isAuthenticated()) {
+    <button
+      class="favorite-button"
+      [class.is-favorite]="isFavorite$ | async"
+      (click)="toggleFavorite($event)"
+      matTooltip="{{
+        (isFavorite$ | async) ? 'Remove from favorites' : 'Add to favorites'
+      }}"
+    >
+      <mat-icon>{{
+        (isFavorite$ | async) ? "favorite" : "favorite_border"
+      }}</mat-icon>
+    </button>
+    }
   </div>
 
   @if (isCustomVideo) {

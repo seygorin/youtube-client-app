@@ -13,6 +13,10 @@ import { VideoItem } from '../../models/video.model';
 import { PublicationDateColorDirective } from '../../../../shared/directives/publication-date-color.directive';
 import { Subscription } from 'rxjs';
 import { LoadingSpinnerComponent } from '../../../../shared/components/loading-spinner/loading-spinner.component';
+import { Store } from '@ngrx/store';
+import { selectIsFavorite } from '../../store/favorites/favorites.selectors';
+import { FavoritesActions } from '../../store/favorites/favorites.actions';
+import { AuthService } from '../../../../core/auth/services/auth.service';
 
 @Component({
   selector: 'app-video-detail',
@@ -37,14 +41,19 @@ export class VideoDetailComponent implements OnInit, OnDestroy {
   private router = inject(Router);
   private videoService = inject(VideoService);
   private sanitizer = inject(DomSanitizer);
+  private store = inject(Store);
+  public authService = inject(AuthService);
   private subscriptions = new Subscription();
 
   video = signal<VideoItem | undefined>(undefined);
   videoEmbedUrl = signal<SafeResourceUrl | null>(null);
   isLoading = signal<boolean>(false);
   error = signal<string | null>(null);
+  isFavorite = signal<boolean>(false);
 
   ngOnInit(): void {
+    this.store.dispatch(FavoritesActions.loadFavorites());
+
     this.subscriptions.add(
       this.route.paramMap.subscribe((params) => {
         const videoId = params.get('id');
@@ -53,6 +62,14 @@ export class VideoDetailComponent implements OnInit, OnDestroy {
           this.error.set(null);
 
           this.setYoutubeEmbedUrl(videoId);
+
+          this.subscriptions.add(
+            this.store
+              .select(selectIsFavorite(videoId))
+              .subscribe((isFavorite) => {
+                this.isFavorite.set(isFavorite);
+              })
+          );
 
           this.subscriptions.add(
             this.videoService.getVideoById(videoId).subscribe({
@@ -88,5 +105,16 @@ export class VideoDetailComponent implements OnInit, OnDestroy {
 
   goBack(): void {
     void this.router.navigate(['/']);
+  }
+
+  toggleFavorite(event: Event): void {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (this.video()) {
+      this.store.dispatch(
+        FavoritesActions.toggleFavorite({ video: this.video()! })
+      );
+    }
   }
 }
