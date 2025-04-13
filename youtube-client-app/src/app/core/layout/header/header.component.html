@@ -43,6 +43,14 @@
     </button>
     <button
       mat-icon-button
+      routerLink="/video/favorites"
+      class="favorites-button"
+      matTooltip="My Favorites"
+    >
+      <mat-icon>favorite</mat-icon>
+    </button>
+    <button
+      mat-icon-button
       (click)="authService.logout()"
       class="logout-button"
       matTooltip="Logout"
