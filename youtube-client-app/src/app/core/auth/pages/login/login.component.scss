@@ -72,15 +72,10 @@
 .login-button {
   background-color: var(--mat-sys-primary);
   color: var(--mat-sys-on-primary);
-  border: none;
-  border-radius: 20px;
-  padding: 12px;
-  font-size: 16px;
-  cursor: pointer;
   transition: background-color 0.3s ease, color 0.3s ease;
 
   &:hover {
-    background-color: var(--mat-sys-secondary);
+    background-color: var(--mat-sys-primary-container);
   }
 
   &:disabled {

@@ -40,7 +40,13 @@
     <div class="form-error">{{ errorMessage }}</div>
     }
 
-    <button type="submit" [disabled]="isSubmitting" class="login-button">
+    <button
+      type="submit"
+      mat-raised-button
+      color="primary"
+      [disabled]="loginForm.invalid || isSubmitting"
+      class="login-button"
+    >
       Login
     </button>
   </form>

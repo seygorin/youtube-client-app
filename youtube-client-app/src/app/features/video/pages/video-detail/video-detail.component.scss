@@ -20,7 +20,7 @@
   background-color: var(--mat-sys-surface);
   color: var(--mat-sys-on-surface);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
+  border-radius: 4px;
   position: relative;
   overflow: hidden;
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -124,7 +124,7 @@
   padding: 12px;
   background-color: var(--mat-sys-primary-container);
   color: var(--mat-sys-on-surface-variant);
-  border-radius: 8px;
+  border-radius: 4px;
   transition: background-color 0.3s ease, color 0.3s ease;
 
   .stat-item {
@@ -227,7 +227,7 @@
   padding: 20px;
   text-align: center;
   background-color: var(--mat-sys-surface);
-  border-radius: 8px;
+  border-radius: 4px;
   transition: background-color 0.3s ease;
 
   p {
