@@ -69,6 +69,14 @@ export class CreateVideoComponent {
     });
   }
 
+  private extractYoutubeId(url: string): string {
+    const regExp =
+      /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/|shorts\/)|(?:(?:watch)?\?v(?:i)?=|&v(?:i)?=))([^#&?]*).*/;
+    const match = url.match(regExp);
+
+    return match && match[1].length === 11 ? match[1] : '';
+  }
+
   onSubmit(): void {
     if (this.cardForm.invalid) {
       this.cardForm.markAllAsTouched();
@@ -81,8 +89,10 @@ export class CreateVideoComponent {
     try {
       const { title, description, thumbnail, videoLink } = this.cardForm.value;
 
+      const videoId = this.extractYoutubeId(videoLink);
+
       const newCard = {
-        id: 'custom-' + Date.now().toString(),
+        id: videoId,
         title,
         description,
         thumbnail,
@@ -92,7 +102,6 @@ export class CreateVideoComponent {
         dislikeCount: 0,
         commentCount: 0,
         channelTitle: this.authService.currentUser()?.name || 'Custom User',
-        videoLink,
       };
 
       this.videoService.addCustomVideo(newCard);
