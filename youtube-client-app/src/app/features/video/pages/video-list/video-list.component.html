@@ -1,5 +1,5 @@
 <div class="video-list-container">
-  @if (isLoading$ | async) {
+  @if ((showMainLoader() | async)) {
   <app-loading-spinner />
   } @else {
   <div class="videos-grid">
@@ -12,5 +12,10 @@
     </div>
     } }
   </div>
-  }
+
+  @if (isLoadingMore) {
+  <div class="bottom-loader">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+  } }
 </div>

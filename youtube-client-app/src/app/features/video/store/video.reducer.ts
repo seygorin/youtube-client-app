@@ -186,5 +186,22 @@ export const videoReducer = createReducer(
   on(VideoActions.resetVideosLoaded, (state) => ({
     ...state,
     videosLoaded: false,
+  })),
+
+  on(VideoActions.loadMorePopularVideos, (state) => ({
+    ...state,
+    loading: true,
+  })),
+
+  on(VideoActions.loadMorePopularVideosSuccess, (state, { videos }) => ({
+    ...state,
+    videos: [...state.videos, ...videos],
+    loading: false,
+  })),
+
+  on(VideoActions.loadMorePopularVideosFailure, (state, { error }) => ({
+    ...state,
+    error,
+    loading: false,
   }))
 );

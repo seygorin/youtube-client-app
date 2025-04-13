@@ -5,11 +5,7 @@ import { of } from 'rxjs';
 import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { VideoItem } from '../models/video.model';
 import { VideoActions } from './video.actions';
-import {
-  selectAllVideos,
-  selectCustomVideos,
-  selectVideosLoaded,
-} from './video.selectors';
+import { selectAllVideos, selectCustomVideos } from './video.selectors';
 import { YoutubeApiService } from '../services/youtube-api.service';
 import { CUSTOM_VIDEOS_KEY } from './video.state';
 
@@ -158,29 +154,50 @@ export class VideoEffects {
     )
   );
 
-  checkAndLoadPopularVideos$ = createEffect(() =>
-    this.actions$.pipe(
+  loadPopularVideos$ = createEffect(() => {
+    return this.actions$.pipe(
       ofType(VideoActions.loadPopularVideos),
-      withLatestFrom(
-        this.store.select(selectAllVideos),
-        this.store.select(selectVideosLoaded)
-      ),
-      switchMap(([_, videos, videosLoaded]) => {
-        if (videosLoaded && videos.length > 0) {
-          return of(VideoActions.loadPopularVideosSuccess({ videos }));
-        }
-
-        return this.youtubeApiService.getPopularVideos(12).pipe(
-          map((videos) => VideoActions.loadPopularVideosSuccess({ videos })),
-          catchError((error) =>
-            of(
+      switchMap(() => {
+        this.youtubeApiService.resetPagination();
+        return this.youtubeApiService.getPopularVideos().pipe(
+          map((response) =>
+            VideoActions.loadPopularVideosSuccess({
+              videos: response.videos,
+            })
+          ),
+          catchError((error) => {
+            console.error('Error loading popular videos:', error);
+            return of(
               VideoActions.loadPopularVideosFailure({
-                error: `Failed to load popular videos: ${error.message}`,
+                error: 'Failed to load popular videos',
               })
-            )
-          )
+            );
+          })
         );
       })
-    )
-  );
+    );
+  });
+
+  loadMorePopularVideos$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(VideoActions.loadMorePopularVideos),
+      switchMap(() => {
+        return this.youtubeApiService.getPopularVideos(10).pipe(
+          map((response) =>
+            VideoActions.loadMorePopularVideosSuccess({
+              videos: response.videos,
+            })
+          ),
+          catchError((error) => {
+            console.error('Error loading more popular videos:', error);
+            return of(
+              VideoActions.loadMorePopularVideosFailure({
+                error: 'Failed to load more videos',
+              })
+            );
+          })
+        );
+      })
+    );
+  });
 }

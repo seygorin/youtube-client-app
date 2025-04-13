@@ -11,6 +11,8 @@ import { VideoItem } from '../models/video.model';
   providedIn: 'root',
 })
 export class YoutubeApiService {
+  private nextPageToken: string | null = null;
+
   constructor(private http: HttpClient) {}
 
   searchVideos(query: string): Observable<SearchResponse> {
@@ -65,14 +67,22 @@ export class YoutubeApiService {
     return this.getVideoDetails(videoId);
   }
 
-  getPopularVideos(maxResults = 10): Observable<VideoItem[]> {
+  getPopularVideos(
+    maxResults = 10
+  ): Observable<{ videos: VideoItem[]; hasMore: boolean }> {
+    const pageTokenParam = this.nextPageToken
+      ? `&pageToken=${this.nextPageToken}`
+      : '';
+
     return this.http
       .get<VideoDetailsResponse>(
-        `@youtube/videos?part=snippet,statistics&chart=mostPopular&maxResults=${maxResults}&regionCode=KZ`
+        `@youtube/videos?part=snippet,statistics&chart=mostPopular&maxResults=${maxResults}&regionCode=KZ${pageTokenParam}`
       )
       .pipe(
         map((response) => {
-          return response.items.map((item) => ({
+          this.nextPageToken = response.nextPageToken || null;
+
+          const videos = response.items.map((item) => ({
             id: item.id,
             title: item.snippet.title,
             description: item.snippet.description,
@@ -87,11 +97,20 @@ export class YoutubeApiService {
             channelTitle: item.snippet.channelTitle,
             videoLink: `https://www.youtube.com/watch?v=${item.id}`,
           }));
+
+          return {
+            videos,
+            hasMore: !!this.nextPageToken,
+          };
         }),
         catchError((error) => {
           console.error('Error fetching popular videos:', error);
-          return of([]);
+          return of({ videos: [], hasMore: false });
         })
       );
+  }
+
+  resetPagination(): void {
+    this.nextPageToken = null;
   }
 }

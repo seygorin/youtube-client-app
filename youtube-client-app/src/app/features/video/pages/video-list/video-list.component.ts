@@ -1,4 +1,12 @@
-import { Component, inject, OnInit } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  HostListener,
+  ViewChild,
+  ElementRef,
+  NgZone,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { VideoItem } from '../../models/video.model';
@@ -9,7 +17,14 @@ import {
   selectSortedAndFilteredVideos,
   selectVideosLoaded,
 } from '../../store/video.selectors';
-import { Observable, filter, take } from 'rxjs';
+import {
+  Observable,
+  filter,
+  take,
+  distinctUntilChanged,
+  combineLatest,
+  map,
+} from 'rxjs';
 import { VideoActions } from '../../store/video.actions';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { LoadingSpinnerComponent } from '../../../../shared/components/loading-spinner/loading-spinner.component';
@@ -28,12 +43,20 @@ import { LoadingSpinnerComponent } from '../../../../shared/components/loading-s
 })
 export class VideoListComponent implements OnInit {
   private store = inject(Store);
+  private ngZone = inject(NgZone);
+
+  @ViewChild('videoContainer') videoContainer!: ElementRef;
 
   sortedVideos$: Observable<VideoItem[]> = this.store.select(
     selectSortedAndFilteredVideos
   );
 
   isLoading$: Observable<boolean> = this.store.select(selectLoading);
+
+  public isLoadingMore = false;
+  private scrollPosition = 0;
+  private loadingInitiated = false;
+  private initialLoadComplete = false;
 
   ngOnInit(): void {
     this.store
@@ -42,6 +65,25 @@ export class VideoListComponent implements OnInit {
       .subscribe((videos) => {
         if (!videos || videos.length === 0) {
           this.loadVideosSequentially();
+        } else {
+          this.initialLoadComplete = true;
+        }
+      });
+
+    this.store
+      .select(selectLoading)
+      .pipe(distinctUntilChanged())
+      .subscribe((isLoading) => {
+        if (!isLoading && this.isLoadingMore) {
+          this.isLoadingMore = false;
+          this.loadingInitiated = false;
+
+          setTimeout(() => {
+            window.scrollTo({
+              top: this.scrollPosition,
+              behavior: 'auto',
+            });
+          }, 10);
         }
       });
   }
@@ -56,11 +98,60 @@ export class VideoListComponent implements OnInit {
         take(1)
       )
       .subscribe(() => {
+        this.initialLoadComplete = true;
         this.store.dispatch(VideoActions.loadCustomVideos());
       });
   }
 
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll() {
+    if (
+      this.isLoadingMore ||
+      this.loadingInitiated ||
+      !this.initialLoadComplete
+    )
+      return;
+
+    this.scrollPosition =
+      window.pageYOffset || document.documentElement.scrollTop;
+
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+
+    if (documentHeight - (this.scrollPosition + windowHeight) < 300) {
+      this.loadMoreVideos();
+    }
+  }
+
+  loadMoreVideos() {
+    this.ngZone.runOutsideAngular(() => {
+      this.store
+        .select(selectLoading)
+        .pipe(take(1))
+        .subscribe((isLoading) => {
+          if (!isLoading && !this.isLoadingMore && !this.loadingInitiated) {
+            this.ngZone.run(() => {
+              this.loadingInitiated = true;
+              this.isLoadingMore = true;
+              this.store.dispatch(VideoActions.loadMorePopularVideos());
+            });
+          }
+        });
+    });
+  }
+
   trackById(index: number, video: VideoItem): string {
     return video.id;
+  }
+
+  showMainLoader(): Observable<boolean> {
+    return combineLatest([
+      this.isLoading$,
+      this.store.select(selectAllVideos),
+    ]).pipe(
+      map(([isLoading, videos]) => {
+        return isLoading && (!videos || videos.length === 0);
+      })
+    );
   }
 }

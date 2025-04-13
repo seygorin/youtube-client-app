@@ -36,47 +36,35 @@ export interface SearchItem {
 export interface VideoDetailsResponse {
   kind: string;
   etag: string;
-  items: VideoDetailItem[];
+  items: {
+    id: string;
+    snippet: {
+      publishedAt: string;
+      channelId: string;
+      title: string;
+      description: string;
+      thumbnails: {
+        default: { url: string; width: number; height: number };
+        medium: { url: string; width: number; height: number };
+        high: { url: string; width: number; height: number };
+      };
+      channelTitle: string;
+      tags?: string[];
+      categoryId: string;
+    };
+    statistics: {
+      viewCount: string;
+      likeCount: string;
+      dislikeCount?: string;
+      favoriteCount: string;
+      commentCount: string;
+    };
+  }[];
   pageInfo: {
     totalResults: number;
     resultsPerPage: number;
   };
-}
-
-export interface VideoDetailItem {
-  kind: string;
-  etag: string;
-  id: string;
-  snippet: {
-    publishedAt: string;
-    channelId: string;
-    title: string;
-    description: string;
-    thumbnails: {
-      default: Thumbnail;
-      medium: Thumbnail;
-      high: Thumbnail;
-      standard?: Thumbnail;
-      maxres?: Thumbnail;
-    };
-    channelTitle: string;
-    tags?: string[];
-    categoryId: string;
-    liveBroadcastContent: string;
-    defaultLanguage?: string;
-    localized: {
-      title: string;
-      description: string;
-    };
-    defaultAudioLanguage?: string;
-  };
-  statistics: {
-    viewCount: string;
-    likeCount: string;
-    dislikeCount?: string;
-    favoriteCount: string;
-    commentCount: string;
-  };
+  nextPageToken?: string;
 }
 
 interface Thumbnail {

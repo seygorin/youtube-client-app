@@ -43,5 +43,9 @@ export const VideoActions = createActionGroup({
     'Load Popular Videos Failure': props<{ error: string }>(),
 
     'Reset Videos Loaded': emptyProps(),
+
+    'Load More Popular Videos': emptyProps(),
+    'Load More Popular Videos Success': props<{ videos: VideoItem[] }>(),
+    'Load More Popular Videos Failure': props<{ error: string }>(),
   },
 });
