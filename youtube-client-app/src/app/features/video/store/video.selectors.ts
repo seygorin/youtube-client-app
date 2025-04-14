@@ -1,5 +1,10 @@
-import { createFeatureSelector, createSelector } from '@ngrx/store';
+import {
+  createFeatureSelector,
+  createSelector,
+  MemoizedSelector,
+} from '@ngrx/store';
 import { VideoState } from '../models/state.model';
+import { VideoItem } from '../models/video.model';
 
 export const selectVideoState = createFeatureSelector<VideoState>('video');
 
@@ -131,7 +136,9 @@ export const selectSortedAndFilteredVideos = createSelector(
   }
 );
 
-export const selectVideoById = (videoId: string) =>
+export const selectVideoById = (
+  videoId: string
+): MemoizedSelector<object, VideoItem | null> =>
   createSelector(
     selectAllVideos,
     selectSearchResults,

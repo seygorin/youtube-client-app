@@ -24,4 +24,8 @@ export class FavoritesListComponent implements OnInit {
   ngOnInit(): void {
     this.store.dispatch(FavoritesActions.loadFavorites());
   }
+
+  trackById(index: number, video: VideoItem): string {
+    return index + ':' + video.id;
+  }
 }

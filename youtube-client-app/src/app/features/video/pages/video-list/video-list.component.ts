@@ -104,7 +104,7 @@ export class VideoListComponent implements OnInit {
   }
 
   @HostListener('window:scroll', ['$event'])
-  onWindowScroll() {
+  onWindowScroll(): void {
     if (
       this.isLoadingMore ||
       this.loadingInitiated ||
@@ -123,7 +123,7 @@ export class VideoListComponent implements OnInit {
     }
   }
 
-  loadMoreVideos() {
+  loadMoreVideos(): void {
     this.ngZone.runOutsideAngular(() => {
       this.store
         .select(selectLoading)
@@ -141,7 +141,7 @@ export class VideoListComponent implements OnInit {
   }
 
   trackById(index: number, video: VideoItem): string {
-    return video.id;
+    return index + ':' + video.id;
   }
 
   showMainLoader(): Observable<boolean> {

@@ -4,7 +4,7 @@
   } @else {
   <div class="videos-grid">
     @if (sortedVideos$ | async; as videos) { @if (videos.length > 0) { @for
-    (video of videos; track video.id) {
+    (video of videos; track $index + ':' + video.id) {
     <app-search-item [video]="video"></app-search-item>
     } } @else {
     <div class="no-results">

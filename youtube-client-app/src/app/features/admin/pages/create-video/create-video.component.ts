@@ -5,6 +5,7 @@ import {
   FormGroup,
   ReactiveFormsModule,
   Validators,
+  FormControl,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -122,19 +123,19 @@ export class CreateVideoComponent {
     void this.router.navigate(['/admin']);
   }
 
-  get titleControl() {
-    return this.cardForm.get('title');
+  get titleControl(): FormControl | null {
+    return this.cardForm.get('title') as FormControl;
   }
 
-  get descriptionControl() {
-    return this.cardForm.get('description');
+  get descriptionControl(): FormControl | null {
+    return this.cardForm.get('description') as FormControl;
   }
 
-  get thumbnailControl() {
-    return this.cardForm.get('thumbnail');
+  get thumbnailControl(): FormControl | null {
+    return this.cardForm.get('thumbnail') as FormControl;
   }
 
-  get videoLinkControl() {
-    return this.cardForm.get('videoLink');
+  get videoLinkControl(): FormControl | null {
+    return this.cardForm.get('videoLink') as FormControl;
   }
 }

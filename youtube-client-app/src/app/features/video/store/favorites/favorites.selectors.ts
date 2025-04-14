@@ -1,4 +1,8 @@
-import { createFeatureSelector, createSelector } from '@ngrx/store';
+import {
+  createFeatureSelector,
+  createSelector,
+  MemoizedSelector,
+} from '@ngrx/store';
 import { FavoritesState } from './favorites.state';
 
 export const selectFavoritesState =
@@ -19,7 +23,9 @@ export const selectFavoritesError = createSelector(
   (state) => state.error
 );
 
-export const selectIsFavorite = (videoId: string) =>
+export const selectIsFavorite = (
+  videoId: string
+): MemoizedSelector<object, boolean> =>
   createSelector(selectAllFavorites, (favorites) =>
     favorites.some((video) => video.id === videoId)
   );

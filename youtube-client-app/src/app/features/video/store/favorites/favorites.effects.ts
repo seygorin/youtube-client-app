@@ -43,7 +43,7 @@ export class FavoritesEffects {
           FavoritesActions.toggleFavorite
         ),
         withLatestFrom(this.store.select(selectAllFavorites)),
-        map(([_, favorites]) => {
+        map(([, favorites]) => {
           try {
             localStorage.setItem('favorites', JSON.stringify(favorites));
           } catch (error) {

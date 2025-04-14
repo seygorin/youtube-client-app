@@ -20,7 +20,7 @@ class ThemeService {
     }
   }
 
-  setDarkTheme(isDark: boolean) {
+  setDarkTheme(isDark: boolean): void {
     this.isDarkTheme.set(isDark);
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
 
@@ -31,7 +31,7 @@ class ThemeService {
     }
   }
 
-  toggleTheme() {
+  toggleTheme(): void {
     this.setDarkTheme(!this.isDarkTheme());
   }
 }
