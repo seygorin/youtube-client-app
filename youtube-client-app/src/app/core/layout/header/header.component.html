@@ -39,7 +39,7 @@
       @if (authService.isAuthenticated()) {
       <a
         mat-list-item
-        routerLink="/video/favorites"
+        routerLink="/favorites"
         (click)="closeDrawer()"
         tabindex="0"
       >
@@ -132,7 +132,7 @@
         </button>
         <button
           mat-icon-button
-          routerLink="/video/favorites"
+          routerLink="/favorites"
           class="favorites-button"
           matTooltip="My Favorites"
         >

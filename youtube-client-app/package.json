@@ -1,6 +1,7 @@
 {
   "name": "youtube-client-app",
   "version": "0.0.0",
+  "author": "seygorin",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

@@ -21,6 +21,14 @@ export const routes: Routes = [
       ).then((m) => m.SearchResultsComponent),
   },
   {
+    path: 'favorites',
+    loadChildren: () =>
+      import('./features/favorites/favorites.routes').then(
+        (m) => m.FAVORITES_ROUTES
+      ),
+    canActivate: [authGuard],
+  },
+  {
     path: 'video',
     loadChildren: () =>
       import('./features/video/video.routes').then((m) => m.VIDEO_ROUTES),
