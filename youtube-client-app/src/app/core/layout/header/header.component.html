@@ -1,75 +1,167 @@
-<mat-toolbar color="primary">
-  <app-theme-toggle></app-theme-toggle>
-
-  <div class="toolbar-container">
-    <div class="logo" routerLink="/">
-      <mat-icon>play_arrow</mat-icon>
-    </div>
-
-    <div class="search-container">
-      <input
-        [formControl]="searchControl"
-        placeholder="What are you want to find out?"
-        (blur)="onInputBlur()"
-        (keyup.enter)="onSearch()"
-      />
-      <button class="search-button" (click)="onSearch()">
-        <span>search</span>
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav
+    #drawer
+    class="sidenav"
+    fixedInViewport
+    [mode]="'over'"
+    [opened]="isDrawerOpen"
+    (closedStart)="closeDrawer()"
+  >
+    <div class="drawer-header">
+      <button mat-icon-button (click)="closeDrawer()">
+        <mat-icon>close</mat-icon>
       </button>
     </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="mobile-search">
+      <div class="search-container">
+        <input
+          [formControl]="searchControl"
+          placeholder="What are you want to find out?"
+          (keyup.enter)="onSearch()"
+        />
+        <button class="search-button" (click)="onSearch()">
+          <span>search</span>
+        </button>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <mat-nav-list role="menu">
+      <a mat-list-item routerLink="/" (click)="closeDrawer()" tabindex="0">
+        <mat-icon matListItemIcon>home</mat-icon>
+        <span>Home</span>
+      </a>
+
+      @if (authService.isAuthenticated()) {
+      <a
+        mat-list-item
+        routerLink="/video/favorites"
+        (click)="closeDrawer()"
+        tabindex="0"
+      >
+        <mat-icon matListItemIcon>favorite</mat-icon>
+        <span>Favorites</span>
+      </a>
+
+      <a mat-list-item routerLink="/admin" (click)="closeDrawer()" tabindex="0">
+        <mat-icon matListItemIcon>settings</mat-icon>
+        <span>Admin Panel</span>
+      </a>
+
+      <button
+        mat-list-item
+        (click)="logoutAndClose()"
+        (keydown.enter)="logoutAndClose()"
+        role="menuitem"
+        tabindex="0"
+        class="logout-button"
+      >
+        <mat-icon matListItemIcon>exit_to_app</mat-icon>
+        <span>Logout</span>
+      </button>
+      } @else {
+      <a mat-list-item routerLink="/login" (click)="closeDrawer()" tabindex="0">
+        <mat-icon matListItemIcon>login</mat-icon>
+        <span>Login</span>
+      </a>
+      }
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      @if (isMobile$ | async) {
+      <button
+        class="menu-button"
+        mat-icon-button
+        (click)="toggleDrawer()"
+        aria-label="Toggle menu"
+      >
+        <mat-icon>menu</mat-icon>
+      </button>
+      }
+
+      <app-theme-toggle></app-theme-toggle>
+
+      <div class="toolbar-container">
+        <div class="logo" routerLink="/">
+          <mat-icon>play_arrow</mat-icon>
+        </div>
+
+        @if ((isMobile$ | async) === false) {
+        <div class="search-container">
+          <input
+            [formControl]="searchControl"
+            placeholder="What are you want to find out?"
+            (blur)="onInputBlur()"
+            (keyup.enter)="onSearch()"
+          />
+          <button class="search-button" (click)="onSearch()">
+            <span>search</span>
+          </button>
+        </div>
+
+        @if (navigationService.isHomePage()) {
+        <button
+          class="filter-button"
+          mat-icon-button
+          (click)="toggleFiltering()"
+          matTooltip="Filtering & Sorting"
+        >
+          <mat-icon>tune</mat-icon>
+        </button>
+        } }
+      </div>
+
+      @if ((isMobile$ | async) === false) {
+      <div class="action-buttons">
+        @if (authService.isAuthenticated() && authService.currentUser()) {
+        <span class="username">{{ authService.currentUser()?.name }}</span>
+        } @if (authService.isAuthenticated()) {
+        <button
+          mat-icon-button
+          routerLink="/admin"
+          class="admin-button"
+          matTooltip="Admin Panel"
+        >
+          <mat-icon>settings</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          routerLink="/video/favorites"
+          class="favorites-button"
+          matTooltip="My Favorites"
+        >
+          <mat-icon>favorite</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          (click)="authService.logout()"
+          class="logout-button"
+          matTooltip="Logout"
+        >
+          <mat-icon>exit_to_app</mat-icon>
+        </button>
+        } @else {
+        <button
+          mat-icon-button
+          routerLink="/login"
+          class="login-button"
+          matTooltip="Login"
+        >
+          <mat-icon>login</mat-icon>
+        </button>
+        }
+      </div>
+      }
+    </mat-toolbar>
+
     @if (navigationService.isHomePage()) {
-    <button
-      class="filter-button"
-      mat-icon-button
-      (click)="toggleFiltering()"
-      matTooltip="Filtering & Sorting"
-    >
-      <mat-icon>tune</mat-icon>
-    </button>
+    <app-search-filter></app-search-filter>
     }
-  </div>
-
-  <div class="action-buttons">
-    @if (authService.isAuthenticated() && authService.currentUser()) {
-    <span class="username">{{ authService.currentUser()?.name }}</span>
-    } @if (authService.isAuthenticated()) {
-    <button
-      mat-icon-button
-      routerLink="/admin"
-      class="admin-button"
-      matTooltip="Admin Panel"
-    >
-      <mat-icon>settings</mat-icon>
-    </button>
-    <button
-      mat-icon-button
-      routerLink="/video/favorites"
-      class="favorites-button"
-      matTooltip="My Favorites"
-    >
-      <mat-icon>favorite</mat-icon>
-    </button>
-    <button
-      mat-icon-button
-      (click)="authService.logout()"
-      class="logout-button"
-      matTooltip="Logout"
-    >
-      <mat-icon>exit_to_app</mat-icon>
-    </button>
-    } @else {
-    <button
-      mat-icon-button
-      routerLink="/login"
-      class="login-button"
-      matTooltip="Login"
-    >
-      <mat-icon>login</mat-icon>
-    </button>
-    }
-  </div>
-</mat-toolbar>
-
-@if (navigationService.isHomePage()) {
-<app-search-filter></app-search-filter>
-}
+  </mat-sidenav-content>
+</mat-sidenav-container>

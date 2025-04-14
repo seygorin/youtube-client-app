@@ -155,3 +155,68 @@ mat-toolbar {
     }
   }
 }
+
+.sidenav-container {
+  height: 100%;
+  z-index: 100;
+
+  .sidenav {
+    width: 100%;
+  }
+
+  .drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px;
+    height: 56px;
+
+    .menu-title {
+      font-size: 18px;
+      font-weight: 500;
+      text-align: left;
+    }
+  }
+
+  .mobile-search {
+    padding: 16px;
+
+    .search-container {
+      width: 100%;
+      margin-left: 0;
+    }
+  }
+}
+
+.menu-button {
+  margin-right: 8px;
+  color: var(--mat-sys-on-primary);
+}
+
+.logout-button {
+  border: none;
+  text-align: left;
+}
+
+mat-nav-list {
+  .mat-mdc-list-item {
+    .mat-icon {
+      margin-right: 16px;
+    }
+
+    span {
+      text-align: left;
+    }
+  }
+}
+
+@media (max-width: 960px) {
+  .toolbar-container {
+    width: auto;
+    justify-content: center;
+  }
+
+  mat-toolbar {
+    padding: 0 8px;
+  }
+}

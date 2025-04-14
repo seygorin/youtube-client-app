@@ -13,6 +13,12 @@ import { NavigationService } from '../../services/navigation.service';
 import { SearchService } from '../../../features/video/services/search.service';
 import { FilterService } from '../../services/filter.service';
 import ThemeToggleComponent from '../../../shared/components/theme-toggle/theme-toggle.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { Observable, map } from 'rxjs';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'app-header',
@@ -28,6 +34,10 @@ import ThemeToggleComponent from '../../../shared/components/theme-toggle/theme-
     RouterLink,
     SearchFilterComponent,
     ThemeToggleComponent,
+    MatSidenavModule,
+    MatListModule,
+    MatTooltipModule,
+    MatDividerModule,
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
@@ -38,8 +48,14 @@ export class HeaderComponent {
   navigationService = inject(NavigationService);
   searchService = inject(SearchService);
   router = inject(Router);
+  breakpointObserver = inject(BreakpointObserver);
 
   searchControl = new FormControl('');
+  isDrawerOpen = false;
+
+  isMobile$: Observable<boolean> = this.breakpointObserver
+    .observe(['(max-width: 960px)'])
+    .pipe(map((result) => result.matches));
 
   constructor() {
     this.searchControl.valueChanges.subscribe((value) => {
@@ -57,6 +73,7 @@ export class HeaderComponent {
       void this.router.navigate(['/search-results'], {
         queryParams: { query: query.trim() },
       });
+      this.closeDrawer();
     }
   }
 
@@ -65,5 +82,18 @@ export class HeaderComponent {
     if (query && query.trim().length >= 3) {
       this.onSearch();
     }
+  }
+
+  toggleDrawer(): void {
+    this.isDrawerOpen = !this.isDrawerOpen;
+  }
+
+  closeDrawer(): void {
+    this.isDrawerOpen = false;
+  }
+
+  logoutAndClose(): void {
+    this.authService.logout();
+    this.closeDrawer();
   }
 }
