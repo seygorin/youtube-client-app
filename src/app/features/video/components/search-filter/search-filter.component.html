@@ -1,0 +1,33 @@
+<div
+  class="sorting-container"
+  [class.hidden]="(showFilters$ | async) === false"
+>
+  <p>Sorting by:</p>
+
+  <div class="sort-options">
+    <a
+      href="javascript:void(0)"
+      [class.active]="isSortingByDate$ | async"
+      (click)="sortByDate()"
+    >
+      date
+    </a>
+
+    <a
+      href="javascript:void(0)"
+      [class.active]="isSortingByViews$ | async"
+      (click)="sortByViews()"
+    >
+      count of views
+    </a>
+
+    <div class="search-by-word">
+      <span>by word or sentence</span>
+      <input
+        type="text"
+        [(ngModel)]="filterKeyword"
+        (input)="onFilterKeywordChange(filterKeyword)"
+      />
+    </div>
+  </div>
+</div>

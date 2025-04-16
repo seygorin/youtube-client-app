@@ -1,0 +1,65 @@
+<div class="admin-container">
+  <div class="admin-header">
+    <div class="actions">
+      <button mat-raised-button color="primary" (click)="addNewCard()">
+        <mat-icon>add</mat-icon>
+        Add New Video Card
+      </button>
+    </div>
+  </div>
+
+  <div class="admin-content">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Your Custom Video Cards</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <ng-container *ngIf="customVideos$ | async as customVideos">
+          @if (customVideos.length === 0) {
+          <p class="no-cards">You haven't created any video cards yet.</p>
+          } @else {
+          <table mat-table [dataSource]="customVideos" class="video-table">
+            <ng-container matColumnDef="thumbnail">
+              <th mat-header-cell *matHeaderCellDef>Thumbnail</th>
+              <td mat-cell *matCellDef="let video">
+                <img
+                  [src]="video.thumbnail"
+                  [alt]="video.title"
+                  class="thumbnail"
+                />
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="title">
+              <th mat-header-cell *matHeaderCellDef>Title</th>
+              <td mat-cell *matCellDef="let video">{{ video.title }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="channelTitle">
+              <th mat-header-cell *matHeaderCellDef>Created by</th>
+              <td mat-cell *matCellDef="let video">{{ video.channelTitle }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef>Actions</th>
+              <td mat-cell *matCellDef="let video">
+                <button
+                  mat-icon-button
+                  color="warn"
+                  (click)="deleteCard(video)"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
+          }
+        </ng-container>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

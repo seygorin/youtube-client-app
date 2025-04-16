@@ -1,0 +1,222 @@
+mat-toolbar {
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--mat-sys-primary-container);
+  color: var(--mat-sys-on-primary-container);
+  padding: 0 16px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.toolbar-container {
+  display: flex;
+  align-items: center;
+  width: 570px;
+  position: relative;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-color: var(--mat-sys-primary);
+  width: 60px;
+  height: 40px;
+  border-radius: 12px;
+  transition: background-color 0.3s ease;
+  flex-shrink: 0;
+
+  mat-icon {
+    font-size: 30px;
+    color: var(--mat-sys-on-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &:hover {
+    background-color: var(--mat-sys-on-primary-container);
+  }
+}
+
+.search-container {
+  flex: 1;
+  width: 420px;
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  flex-shrink: 0;
+
+  input {
+    border: none;
+    padding: 5px 10px;
+    height: 14px;
+    outline: none;
+    flex-grow: 1;
+    background-color: var(--mat-sys-surface);
+    color: var(--mat-sys-on-surface);
+    border-radius: 4px 0 0 4px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .search-button {
+    height: 24px;
+    width: 80px;
+    padding: 0 10px;
+    background: var(--mat-sys-primary);
+    color: var(--mat-sys-on-primary);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0 4px 4px 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    flex-shrink: 0;
+
+    span {
+      font-size: 12px;
+    }
+
+    &:hover {
+      background: var(--mat-sys-secondary);
+    }
+  }
+}
+
+.filter-button {
+  position: absolute;
+  right: -30px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 5px;
+  background-color: var(--mat-sys-primary);
+  color: var(--mat-sys-on-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  min-width: unset;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    background-color: var(--mat-sys-secondary);
+  }
+
+  .mat-icon {
+    font-size: 15px;
+    width: 15px;
+    height: 15px;
+    line-height: 15px;
+    color: var(--mat-sys-on-primary);
+  }
+}
+
+.action-buttons {
+  display: flex;
+  align-items: center;
+  width: 120px;
+  justify-content: flex-end;
+  flex-shrink: 0;
+  gap: 8px;
+
+  .username {
+    color: var(--mat-sys-on-surface-variant);
+    font-size: 14px;
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+    max-width: 80px;
+  }
+
+  button {
+    width: 24px;
+    height: 24px;
+    border-radius: 5px;
+    background-color: var(--mat-sys-primary);
+    transition: background-color 0.3s ease;
+    padding: 0;
+    min-width: unset;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+      background-color: var(--mat-sys-secondary);
+    }
+
+    .mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+      color: var(--mat-sys-on-primary);
+    }
+  }
+}
+
+.sidenav-container {
+  height: 100%;
+  z-index: 100;
+
+  .sidenav {
+    width: 100%;
+  }
+
+  .drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px;
+    height: 56px;
+
+    .menu-title {
+      font-size: 18px;
+      font-weight: 500;
+      text-align: left;
+    }
+  }
+
+  .mobile-search {
+    padding: 16px;
+
+    .search-container {
+      width: 100%;
+      margin-left: 0;
+    }
+  }
+}
+
+.menu-button {
+  margin-right: 8px;
+  color: var(--mat-sys-on-primary);
+}
+
+.logout-button {
+  border: none;
+  text-align: left;
+}
+
+mat-nav-list {
+  .mat-mdc-list-item {
+    .mat-icon {
+      margin-right: 16px;
+    }
+
+    span {
+      text-align: left;
+    }
+  }
+}
+
+@media (max-width: 960px) {
+  .toolbar-container {
+    width: auto;
+    justify-content: center;
+  }
+
+  mat-toolbar {
+    padding: 0 8px;
+  }
+}

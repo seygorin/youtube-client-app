@@ -1,0 +1,9 @@
+<div class="theme-toggle">
+  <mat-icon
+    (click)="themeService.toggleTheme()"
+    (keydown.enter)="themeService.toggleTheme()"
+    (keydown.space)="themeService.toggleTheme(); $event.preventDefault()"
+  >
+    {{ themeService.isDarkTheme() ? "dark_mode" : "light_mode" }}
+  </mat-icon>
+</div>

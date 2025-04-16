@@ -1,0 +1,59 @@
+<mat-card
+  class="video-card"
+  appPublicationDateColor
+  [publishedAt]="video.publishedAt"
+>
+  <div class="thumbnail-container">
+    <img [src]="video.thumbnail" [alt]="video.title" />
+
+    @if (authService.isAuthenticated()) {
+    <button
+      class="favorite-button"
+      [class.is-favorite]="isFavorite$ | async"
+      (click)="toggleFavorite($event)"
+      matTooltip="{{
+        (isFavorite$ | async) ? 'Remove from favorites' : 'Add to favorites'
+      }}"
+    >
+      <mat-icon>{{
+        (isFavorite$ | async) ? "favorite" : "favorite_border"
+      }}</mat-icon>
+    </button>
+    }
+  </div>
+
+  @if (isCustomVideo) {
+  <div class="custom-badge" matTooltip="Custom Video">
+    <mat-icon>star</mat-icon>
+  </div>
+  }
+
+  <div class="stats">
+    <span>
+      <mat-icon>remove_red_eye</mat-icon>
+      {{ video.viewCount | number }}
+    </span>
+    <span>
+      <mat-icon>favorite</mat-icon>
+      {{ video.likeCount | number }}
+    </span>
+    <span>
+      <mat-icon>heart_broken</mat-icon>
+      {{ video.dislikeCount | number }}
+    </span>
+    <span>
+      <mat-icon>forum</mat-icon>
+      {{ video.commentCount | number }}
+    </span>
+  </div>
+
+  <mat-card-content>
+    <h3 class="video-title">{{ video.title }}</h3>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button mat-button class="more-button" [routerLink]="['/video', video.id]">
+      more...
+    </button>
+  </mat-card-actions>
+</mat-card>

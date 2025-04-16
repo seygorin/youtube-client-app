@@ -1,0 +1,11 @@
+<div class="favorites-container">
+  <div class="video-grid">
+    @for (video of favoriteVideos$ | async; track $index + ':' + video.id) {
+    <app-search-item [video]="video"></app-search-item>
+    } @empty {
+    <div class="no-favorites">
+      <p>You haven't added any videos to your favorites yet.</p>
+    </div>
+    }
+  </div>
+</div>
