@@ -1,6 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { User, LoginRequest, AuthResponse } from '../models/user.model';
+import { LocalStorageService } from './local-storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -9,10 +10,16 @@ export class AuthService {
   private readonly TOKEN_KEY = 'auth_token';
   private readonly USER_KEY = 'user_data';
 
-  isAuthenticated = signal<boolean>(this.hasToken());
-  currentUser = signal<User | null>(this.getUserFromStorage());
+  isAuthenticated = signal<boolean>(false);
+  currentUser = signal<User | null>(null);
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private storageService: LocalStorageService
+  ) {
+    this.isAuthenticated.set(this.hasToken());
+    this.currentUser.set(this.getUserFromStorage());
+  }
 
   login(credentials: LoginRequest): { success: boolean; message?: string } {
     if (!credentials.email || !credentials.password) {
@@ -27,8 +34,8 @@ export class AuthService {
       token: 'fake-jwt-token-' + Math.random().toString(36).substring(2),
     };
 
-    localStorage.setItem(this.TOKEN_KEY, authResponse.token);
-    localStorage.setItem(this.USER_KEY, JSON.stringify(authResponse.user));
+    this.storageService.setItem(this.TOKEN_KEY, authResponse.token);
+    this.storageService.setItem(this.USER_KEY, authResponse.user);
 
     this.isAuthenticated.set(true);
     this.currentUser.set(authResponse.user);
@@ -37,8 +44,8 @@ export class AuthService {
   }
 
   logout(): void {
-    localStorage.removeItem(this.TOKEN_KEY);
-    localStorage.removeItem(this.USER_KEY);
+    this.storageService.removeItem(this.TOKEN_KEY);
+    this.storageService.removeItem(this.USER_KEY);
 
     this.isAuthenticated.set(false);
     this.currentUser.set(null);
@@ -47,7 +54,7 @@ export class AuthService {
   }
 
   getToken(): string | null {
-    return localStorage.getItem(this.TOKEN_KEY);
+    return this.storageService.getItem<string>(this.TOKEN_KEY);
   }
 
   private hasToken(): boolean {
@@ -55,7 +62,6 @@ export class AuthService {
   }
 
   private getUserFromStorage(): User | null {
-    const userData = localStorage.getItem(this.USER_KEY);
-    return userData ? JSON.parse(userData) : null;
+    return this.storageService.getItem<User>(this.USER_KEY);
   }
 }

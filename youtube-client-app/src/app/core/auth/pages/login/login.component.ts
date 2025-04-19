@@ -14,6 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from '../../services/auth.service';
 import { ValidationService } from '../../services/validation.service';
+import { PasswordFieldTypePipe } from '../../../auth/pipes/password-field-type.pipe';
 
 @Component({
   selector: 'app-login',
@@ -26,6 +27,7 @@ import { ValidationService } from '../../services/validation.service';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
+    PasswordFieldTypePipe,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
@@ -37,10 +39,10 @@ export class LoginComponent {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 
-  loginForm: FormGroup;
-  hidePassword = true;
-  errorMessage = '';
-  isSubmitting = false;
+  public loginForm: FormGroup;
+  public hidePassword = true;
+  public errorMessage = '';
+  public isSubmitting = false;
 
   constructor() {
     this.loginForm = this.fb.group({

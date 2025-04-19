@@ -1,7 +1,8 @@
-import { Injectable, inject, signal } from '@angular/core';
+import { Injectable, inject, signal, DestroyRef } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { FilterService } from './filter.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Injectable({
   providedIn: 'root',
@@ -9,6 +10,7 @@ import { FilterService } from './filter.service';
 export class NavigationService {
   private router = inject(Router);
   private filterService = inject(FilterService);
+  private destroyRef = inject(DestroyRef);
 
   isHomePage = signal<boolean>(false);
   currentUrl = signal<string>('');
@@ -17,7 +19,10 @@ export class NavigationService {
     this.checkCurrentPage();
 
     this.router.events
-      .pipe(filter((event) => event instanceof NavigationEnd))
+      .pipe(
+        filter((event) => event instanceof NavigationEnd),
+        takeUntilDestroyed(this.destroyRef)
+      )
       .subscribe(() => {
         this.checkCurrentPage();
       });

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
@@ -7,12 +7,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { VideoItem } from '../../models/video.model';
 import { PublicationDateColorDirective } from '../../../../shared/directives/publication-date-color.directive';
-import { Store } from '@ngrx/store';
-import { map, Observable } from 'rxjs';
-import { selectCustomVideos } from '../../store/video.selectors';
-import { selectIsFavorite } from '../../store/favorites/favorites.selectors';
-import { FavoritesActions } from '../../store/favorites/favorites.actions';
+import { Observable } from 'rxjs';
 import { AuthService } from '../../../../core/auth/services/auth.service';
+import { VideoFacade } from '../../facades/video.facade';
+import { DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-search-item',
@@ -35,28 +34,25 @@ export class SearchItemComponent implements OnInit {
   isCustomVideo = false;
   isFavorite$!: Observable<boolean>;
 
-  constructor(private store: Store, public authService: AuthService) {}
+  private videoFacade = inject(VideoFacade);
+  private destroyRef = inject(DestroyRef);
+  public authService = inject(AuthService);
 
   ngOnInit(): void {
-    this.store
-      .select(selectCustomVideos)
-      .pipe(
-        map((customVideos) =>
-          customVideos.some((customVideo) => customVideo.id === this.video.id)
-        )
-      )
+    this.videoFacade
+      .isCustomVideo(this.video.id)
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((isCustom) => {
         this.isCustomVideo = isCustom;
       });
 
-    this.isFavorite$ = this.store.select(selectIsFavorite(this.video.id));
-
-    this.store.dispatch(FavoritesActions.loadFavorites());
+    this.isFavorite$ = this.videoFacade.isFavorite(this.video.id);
+    this.videoFacade.loadFavorites();
   }
 
   toggleFavorite(event: Event): void {
     event.preventDefault();
     event.stopPropagation();
-    this.store.dispatch(FavoritesActions.toggleFavorite({ video: this.video }));
+    this.videoFacade.toggleFavorite(this.video);
   }
 }

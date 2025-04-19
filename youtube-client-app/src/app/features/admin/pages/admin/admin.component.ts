@@ -47,12 +47,6 @@ export class AdminComponent {
     'actions',
   ];
 
-  constructor() {
-    if (!this.authService.isAuthenticated()) {
-      void this.router.navigate(['/login']);
-    }
-  }
-
   addNewCard(): void {
     void this.router.navigate(['/admin/create']);
   }

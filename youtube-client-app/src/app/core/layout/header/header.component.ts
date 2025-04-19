@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -17,7 +17,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Observable, map } from 'rxjs';
+import { Observable, map, Subscription } from 'rxjs';
 import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
@@ -42,7 +42,7 @@ import { MatDividerModule } from '@angular/material/divider';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnDestroy {
   filterService = inject(FilterService);
   authService = inject(AuthService);
   navigationService = inject(NavigationService);
@@ -50,17 +50,26 @@ export class HeaderComponent {
   router = inject(Router);
   breakpointObserver = inject(BreakpointObserver);
 
-  searchControl = new FormControl('');
-  isDrawerOpen = false;
+  public searchControl = new FormControl('');
+  public isDrawerOpen = false;
+  private searchSubscription: Subscription;
 
-  isMobile$: Observable<boolean> = this.breakpointObserver
+  public isMobile$: Observable<boolean> = this.breakpointObserver
     .observe(['(max-width: 960px)'])
     .pipe(map((result) => result.matches));
 
   constructor() {
-    this.searchControl.valueChanges.subscribe((value) => {
-      this.searchService.setSearchQuery(value || '');
-    });
+    this.searchSubscription = this.searchControl.valueChanges.subscribe(
+      (value) => {
+        this.searchService.setSearchQuery(value || '');
+      }
+    );
+  }
+
+  ngOnDestroy(): void {
+    if (this.searchSubscription) {
+      this.searchSubscription.unsubscribe();
+    }
   }
 
   toggleFiltering(): void {

@@ -22,7 +22,7 @@
       <label for="password">Password</label>
       <input
         id="password"
-        [type]="hidePassword ? 'password' : 'text'"
+        [type]="hidePassword | passwordFieldType"
         formControlName="password"
         placeholder="password"
         [class.invalid]="

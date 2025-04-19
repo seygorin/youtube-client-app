@@ -7,14 +7,22 @@ import { VideoItem } from '../../models/video.model';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Subscription } from 'rxjs';
 import { LoadingSpinnerComponent } from '../../../../shared/components/loading-spinner/loading-spinner.component';
+
 @Component({
   selector: 'app-search-results',
   standalone: true,
-  imports: [CommonModule, SearchItemComponent, MatProgressSpinnerModule, LoadingSpinnerComponent],
+  imports: [
+    CommonModule,
+    SearchItemComponent,
+    MatProgressSpinnerModule,
+    LoadingSpinnerComponent,
+  ],
   templateUrl: './search-results.component.html',
   styleUrl: './search-results.component.scss',
 })
 export class SearchResultsComponent implements OnInit, OnDestroy {
+  private readonly MIN_SEARCH_QUERY_LENGTH = 3;
+
   searchQuery = '';
   searchResults: VideoItem[] = [];
   isLoading = false;
@@ -31,7 +39,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.route.queryParams.subscribe((params) => {
         const query = params['query'];
-        if (!query || query.trim().length < 3) {
+        if (!query || query.trim().length < this.MIN_SEARCH_QUERY_LENGTH) {
           void this.router.navigate(['/']);
           return;
         }

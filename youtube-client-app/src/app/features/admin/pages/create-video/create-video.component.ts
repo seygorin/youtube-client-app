@@ -38,15 +38,11 @@ export class CreateVideoComponent {
   private router = inject(Router);
   private snackBar = inject(MatSnackBar);
 
+  private readonly YOUTUBE_ID_LENGTH = 11;
+
   cardForm: FormGroup = this.createForm();
   isSubmitting = false;
   submitError = '';
-
-  constructor() {
-    if (!this.authService.isAuthenticated()) {
-      void this.router.navigate(['/login']);
-    }
-  }
 
   private createForm(): FormGroup {
     return this.fb.group({
@@ -75,7 +71,7 @@ export class CreateVideoComponent {
       /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/|shorts\/)|(?:(?:watch)?\?v(?:i)?=|&v(?:i)?=))([^#&?]*).*/;
     const match = url.match(regExp);
 
-    return match && match[1].length === 11 ? match[1] : '';
+    return match && match[1].length === this.YOUTUBE_ID_LENGTH ? match[1] : '';
   }
 
   onSubmit(): void {
